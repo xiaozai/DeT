@@ -55,7 +55,7 @@ class ATOMnet(nn.Module):
     def extract_features(self, im, layers):
         return self.feature_extractor(im, layers)
 
-class ATOMnet_TwoExtractors(nn.Module):
+class ATOMnet_DeT(nn.Module):
     """ ATOM network module"""
     def __init__(self, feature_extractor, feature_extractor_depth, bb_regressor, bb_regressor_layer, merge_type='mean', extractor_grad=True):
         """
@@ -66,7 +66,7 @@ class ATOMnet_TwoExtractors(nn.Module):
                                     bb_regressor
             extractor_grad - Bool indicating whether backbone feature extractor requires gradients
         """
-        super(ATOMnet_TwoExtractors, self).__init__()
+        super(ATOMnet_DeT, self).__init__()
 
         self.feature_extractor = feature_extractor
         self.feature_extractor_depth = feature_extractor_depth
@@ -131,7 +131,7 @@ class ATOMnet_TwoExtractors(nn.Module):
     def merge(self, color_feat, depth_feat):
 
         feat = {}
-        
+
         if self.merge_type == 'conv':
             feat['layer2'] = self.merge_layer2(torch.cat((color_feat['layer2'], depth_feat['layer2']), 1))
             feat['layer3'] = self.merge_layer3(torch.cat((color_feat['layer3'], depth_feat['layer3']), 1))
@@ -156,7 +156,7 @@ class ATOMnet_TwoExtractors(nn.Module):
 
 
 @model_constructor
-def atom_resnet18_twoextractors(iou_input_dim=(256,256), iou_inter_dim=(256,256), backbone_pretrained=True, merge_type='mean'):
+def atom_restnet18_DeT(iou_input_dim=(256,256), iou_inter_dim=(256,256), backbone_pretrained=True, merge_type='mean'):
     # backbones
     backbone_net = backbones.resnet18(pretrained=backbone_pretrained)
     backbone_net_depth = backbones.resnet18(pretrained=backbone_pretrained)
@@ -164,8 +164,8 @@ def atom_resnet18_twoextractors(iou_input_dim=(256,256), iou_inter_dim=(256,256)
     # Bounding box regressor
     iou_predictor = bbmodels.AtomIoUNet(pred_input_dim=iou_input_dim, pred_inter_dim=iou_inter_dim)
 
-    net = ATOMnet_TwoExtractors(feature_extractor=backbone_net, feature_extractor_depth=backbone_net_depth, bb_regressor=iou_predictor, bb_regressor_layer=['layer2', 'layer3'],
-                  extractor_grad=False, merge_type=merge_type)
+    net = ATOMnet_DeT(feature_extractor=backbone_net, feature_extractor_depth=backbone_net_depth, bb_regressor=iou_predictor, bb_regressor_layer=['layer2', 'layer3'],
+                      extractor_grad=False, merge_type=merge_type)
 
     return net
 

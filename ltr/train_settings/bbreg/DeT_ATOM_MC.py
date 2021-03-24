@@ -23,19 +23,15 @@ def run(settings):
     settings.scale_jitter_factor = {'train': 0, 'test': 0.5}
 
     # Train datasets
-    # lasot_train = Lasot(settings.env.lasot_dir, split='train')
-    # got10k_train = Got10k(settings.env.got10k_dir, split='vottrain')
-    # trackingnet_train = TrackingNet(settings.env.trackingnet_dir, set_ids=list(range(4)))
-    # coco_train = MSCOCOSeq(settings.env.coco_dir)
     coco_train = MSCOCOSeq_depth(settings.env.cocodepth_dir, dtype='rgbcolormap')
     lasot_depth_train = Lasot_depth(root=settings.env.lasotdepth_dir, dtype='rgbcolormap')
-    depthtrack_train = DepthTrack(root=settings.env.depthtrack_dir, dtype='rgbcolormap')
-    depthtrack_horizontal_train = DepthTrack(root=settings.env.depthtrack_horizontal_dir, dtype='rgbcolormap')
-    depthtrack_vertical_train = DepthTrack(root=settings.env.depthtrack_vertical_dir, dtype='rgbcolormap')
+    depthtrack_train = DepthTrack(root=settings.env.depthtrack_dir, split='train', dtype='rgbcolormap')
+    depthtrack_horizontal_train = DepthTrack(root=settings.env.depthtrack_horizontal_dir,  split='train', dtype='rgbcolormap')
+    depthtrack_vertical_train = DepthTrack(root=settings.env.depthtrack_vertical_dir,  split='train', dtype='rgbcolormap')
 
     # Validation datasets
-    # got10k_val = Got10k(settings.env.got10k_dir, split='votval')
-    cdtb_val = CDTB(settings.env.cdtb_dir, split='val', dtype='rgbcolormap')
+    # cdtb_val = CDTB(settings.env.cdtb_dir, split='val', dtype='rgbcolormap')
+    depthtrack_val = DepthTrack(root=settings.env.depthtrack_dir, split='val', dtype='rgbcolormap')
 
     # The joint augmentation transform, that is applied to the pairs jointly
     transform_joint = tfm.Transform(tfm.ToGrayscale(probability=0.05))
@@ -78,7 +74,7 @@ def run(settings):
                              shuffle=True, drop_last=True, stack_dim=1)
 
     # The sampler for validation
-    dataset_val = sampler.ATOMSampler([cdtb_val], [1], samples_per_epoch=500*settings.batch_size, max_gap=50,
+    dataset_val = sampler.ATOMSampler([depthtrack_val], [1], samples_per_epoch=500*settings.batch_size, max_gap=50,
                                       processing=data_processing_val)
 
     # The loader for validation
@@ -86,7 +82,7 @@ def run(settings):
                            shuffle=False, drop_last=True, epoch_interval=5, stack_dim=1)
 
     # Create network and actor
-    net = atom_models.atom_resnet18_twoextractors(backbone_pretrained=True, merge_type='mean')
+    net = atom_models.atom_resnet18_DeT(backbone_pretrained=True, merge_type='conv')
     objective = nn.MSELoss()
     actor = actors.AtomActor(net=net, objective=objective)
 

@@ -24,7 +24,10 @@ def create_default_local_file():
         'msra10k_dir': empty_str,
         'davis_dir': empty_str,
         'youtubevos_dir': empty_str,
-        'cdtb_dir': empty_str})
+        'cdtb_dir': empty_str,
+        'depthtracker_dir': empty_str,
+        'lasotdepth_dir': empty_str,
+        'cocodepth_dir': empty_str})
 
     comment = {'workspace_dir': 'Base directory for saving network checkpoints.',
                'tensorboard_dir': 'Directory for tensorboard files.'}

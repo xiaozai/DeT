@@ -70,7 +70,7 @@ class CDTB(BaseVideoDataset):
         self.dtype = dtype
 
     def get_name(self):
-        return 'cdtb_depth'
+        return 'CDTB'
 
     def has_class_info(self):
         return True
@@ -96,9 +96,6 @@ class CDTB(BaseVideoDataset):
         '''
             CDTB provide 80 sequences
         '''
-        # with open(os.path.join(self.root, 'list.txt')) as f:
-        #     dir_list = list(csv.reader(f))
-        # dir_list = [dir_name[0] for dir_name in dir_list]
         dir_list = pandas.read_csv(os.path.join(self.root, 'list.txt'), header=None, squeeze=True).values.tolist()
         return dir_list
 
@@ -141,17 +138,6 @@ class CDTB(BaseVideoDataset):
         return {'bbox': bbox, 'valid': valid, 'visible': visible}
 
     def _get_frame_path(self, seq_path, frame_id):
-        # if self.dtype in ['raw_depth', 'normalized_depth', 'colormap']:
-        #     frame_path = os.path.join(seq_path, 'depth/{:08}.png'.format(frame_id+1))  # frames start from 1
-        # elif self.dtype == 'color':
-        #     frame_path = os.path.join(seq_path, 'color/{:08}.jpg'.format(frame_id+1))
-        # elif self.dtype == 'rgbd':
-        #     color_frame_path = os.path.join(seq_path, 'color/{:08}.jpg'.format(frame_id+1))
-        #     depth_frame_path = os.path.join(seq_path, 'depth/{:08}.png'.format(frame_id+1))
-        #     frame_path = [color_frame_path, depth_frame_path]
-        # else:
-        #     frame_path = os.path.join(seq_path, 'depth/{:08}.png'.format(frame_id+1))
-
         return os.path.join(seq_path, 'color', '{:08}.jpg'.format(frame_id+1)) , os.path.join(seq_path, 'depth', '{:08}.png'.format(frame_id+1))
 
     def _get_frame(self, seq_path, frame_id, depth_threshold=None):
@@ -163,7 +149,6 @@ class CDTB(BaseVideoDataset):
         dp = cv.imread(depth_path, -1)
 
         if self.dtype == 'color':
-            # img = cv.cvtColor(rgb, cv.COLOR_BGR2RGB)
             img = rgb
 
         elif self.dtype == 'rgbcolormap':
@@ -217,11 +202,6 @@ class CDTB(BaseVideoDataset):
             img = None
 
         return img
-
-    # def get_class_name(self, seq_id):
-    #     obj_meta = self.sequence_meta_info[self.sequence_list[seq_id]]
-    #
-    #     return obj_meta['object_class_name']
 
     def _get_class(self, seq_path):
         raw_class = seq_path.split('_')[0]

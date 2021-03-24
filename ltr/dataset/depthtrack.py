@@ -28,7 +28,7 @@ class DepthTrack(BaseVideoDataset):
 
     """
 
-    def __init__(self, root=None, dtype='colormap', image_loader=jpeg4py_loader, vid_ids=None): #  split=None, data_fraction=None):
+    def __init__(self, root=None, dtype='colormap', split='train',  image_loader=jpeg4py_loader, vid_ids=None): #  split=None, data_fraction=None):
         """
         args:
 
@@ -49,7 +49,8 @@ class DepthTrack(BaseVideoDataset):
         super().__init__('DepthTrack', root, image_loader)
 
         self.root = root
-        self.dtype = dtype                                                      # colormap or depth
+        self.dtype = dtype
+        self.split = split                                                     # colormap or depth
         self.sequence_list = self._build_sequence_list()
 
         self.seq_per_class, self.class_list = self._build_class_list()
@@ -57,13 +58,12 @@ class DepthTrack(BaseVideoDataset):
         self.class_to_id = {cls_name: cls_id for cls_id, cls_name in enumerate(self.class_list)}
 
     def _build_sequence_list(self):
-        '''
-            We only have  the train set, no test set, here we use all 646 videos for training
-        '''
-        # ltr_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..')
-        # file_path = os.path.join(ltr_path, 'data_specs', 'lasot_depth.txt')
-        # sequence_list = pandas.read_csv(file_path, header=None, squeeze=True).values.tolist()
-        sequence_list = os.listdir(self.root)
+
+        ltr_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), '..')
+        file_path = os.path.join(ltr_path, 'data_specs', 'depthtrack_%s.txt'%self.split)
+        sequence_list = pandas.read_csv(file_path, header=None, squeeze=True).values.tolist()
+
+        # sequence_list = os.listdir(self.root)
 
         return sequence_list
 
@@ -84,7 +84,7 @@ class DepthTrack(BaseVideoDataset):
         return seq_per_class, class_list
 
     def get_name(self):
-        return 'lasot_depth'
+        return 'DepthTrack'
 
     def has_class_info(self):
         return True

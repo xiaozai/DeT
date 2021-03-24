@@ -180,16 +180,6 @@ class DiMPSampler(TrackingSampler):
                          num_test_frames=num_test_frames, num_train_frames=num_train_frames, processing=processing,
                          frame_sample_mode=frame_sample_mode)
 
-class TransformerSampler(TrackingSampler):
-    """ See TrackingSampler."""
-
-    def __init__(self, datasets, p_datasets, samples_per_epoch, max_gap,
-                 num_test_frames=1, num_train_frames=1, processing=no_processing, frame_sample_mode='interval'):
-        super().__init__(datasets=datasets, p_datasets=p_datasets, samples_per_epoch=samples_per_epoch, max_gap=max_gap,
-                         num_test_frames=num_test_frames, num_train_frames=num_train_frames, processing=processing,
-                         frame_sample_mode=frame_sample_mode)
-
-
 class ATOMSampler(TrackingSampler):
     """ See TrackingSampler."""
 
@@ -198,19 +188,6 @@ class ATOMSampler(TrackingSampler):
         super().__init__(datasets=datasets, p_datasets=p_datasets, samples_per_epoch=samples_per_epoch, max_gap=max_gap,
                          num_test_frames=num_test_frames, num_train_frames=num_train_frames, processing=processing,
                          frame_sample_mode=frame_sample_mode)
-
-class ATOMSampler_depth_mask(TrackingSampler):
-    """ See TrackingSampler.
-
-        Song !!!
-         The only one difference is the use_depth flag, which tell the TrackingSampler to return train_depths, and test_depths
-    """
-
-    def __init__(self, datasets, p_datasets, samples_per_epoch, max_gap,
-                 num_test_frames=1, num_train_frames=1, processing=no_processing, frame_sample_mode='interval'):
-        super().__init__(datasets=datasets, p_datasets=p_datasets, samples_per_epoch=samples_per_epoch, max_gap=max_gap,
-                         num_test_frames=num_test_frames, num_train_frames=num_train_frames, processing=processing,
-                         frame_sample_mode=frame_sample_mode, use_depth=True)
 
 
 class LWLSampler(torch.utils.data.Dataset):

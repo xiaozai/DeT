@@ -32,15 +32,16 @@ def run(settings):
     # lasot_train = Lasot(settings.env.lasot_dir, split='train')
     # got10k_train = Got10k(settings.env.got10k_dir, split='vottrain')
     # trackingnet_train = TrackingNet(settings.env.trackingnet_dir, set_ids=list(range(4)))
-    coco_train = MSCOCOSeq_depth(settings.env.cocodepth_dir, dtype='rgbcolormap')
-    lasot_depth_train = Lasot_depth(root=settings.env.lasotdepth_dir, dtype='rgbcolormap')
-    # depthtrack_train = DepthTrack(root=settings.env.depthtrack_dir, dtype='rgbcolormap')
-    # depthtrack_horizontal_train = DepthTrack(root=settings.env.depthtrack_horizontal_dir, dtype='rgbcolormap')
-    # depthtrack_vertical_train = DepthTrack(root=settings.env.depthtrack_vertical_dir, dtype='rgbcolormap')
+    # coco_train = MSCOCOSeq_depth(settings.env.cocodepth_dir, dtype='colormap')
+    # lasot_depth_train = Lasot_depth(root=settings.env.lasotdepth_dir, dtype='colormap')
+    depthtrack_train = DepthTrack(root=settings.env.depthtrack_dir,  split='train', dtype='color')
+    depthtrack_horizontal_train = DepthTrack(root=settings.env.depthtrack_horizontal_dir, split='train', dtype='color')
+    depthtrack_vertical_train = DepthTrack(root=settings.env.depthtrack_vertical_dir, split='train', dtype='color')
 
     # Validation datasets
     # got10k_val = Got10k(settings.env.got10k_dir, split='votval')
-    cdtb_val = CDTB(settings.env.cdtb_dir, split='val', dtype='rgbcolormap')
+    # cdtb_val = CDTB(settings.env.cdtb_dir, split='val', dtype='color')
+    depthtrack_val = DepthTrack(root=settings.env.depthtrack_dir,  split='val', dtype='color')
 
     # Data transform
     transform_joint = tfm.Transform(tfm.ToGrayscale(probability=0.05))
@@ -76,7 +77,7 @@ def run(settings):
                                                     joint_transform=transform_joint)
 
     # Train sampler and loader
-    dataset_train = sampler.DiMPSampler([coco_train, lasot_depth_train], [1, 1],
+    dataset_train = sampler.DiMPSampler([depthtrack_train, depthtrack_horizontal_train, depthtrack_vertical_train], [1, 0.25, 0.25],
                                         samples_per_epoch=26000, max_gap=30, num_test_frames=3, num_train_frames=3,
                                         processing=data_processing_train)
 
@@ -84,7 +85,7 @@ def run(settings):
                              shuffle=True, drop_last=True, stack_dim=1)
 
     # Validation samplers and loaders
-    dataset_val = sampler.DiMPSampler([cdtb_val], [1], samples_per_epoch=5000, max_gap=30,
+    dataset_val = sampler.DiMPSampler([depthtrack_val], [1], samples_per_epoch=5000, max_gap=30,
                                       num_test_frames=3, num_train_frames=3,
                                       processing=data_processing_val)
 
@@ -98,12 +99,11 @@ def run(settings):
     #                         init_gauss_sigma=output_sigma * settings.feature_sz, num_dist_bins=100,
     #                         bin_displacement=0.1, mask_init_factor=3.0, target_mask_act='sigmoid', score_act='relu')
 
-    net = dimpnet.dimpnet50_rgbcolormap_postmerge_twoextractor(filter_size=settings.target_filter_sz, backbone_pretrained=True, optim_iter=5,
-                                                               clf_feat_norm=True, clf_feat_blocks=0, final_conv=True, out_feature_dim=512,
-                                                               optim_init_step=0.9, optim_init_reg=0.1,
-                                                               init_gauss_sigma=output_sigma * settings.feature_sz, num_dist_bins=100,
-                                                               bin_displacement=0.1, mask_init_factor=3.0, target_mask_act='sigmoid', score_act='relu',
-                                                               merge_type='conv')
+    net = dimpnet.dimpnet50(filter_size=settings.target_filter_sz, backbone_pretrained=True, optim_iter=5,
+                            clf_feat_norm=True, clf_feat_blocks=0, final_conv=True, out_feature_dim=512,
+                            optim_init_step=0.9, optim_init_reg=0.1,
+                            init_gauss_sigma=output_sigma * settings.feature_sz, num_dist_bins=100,
+                            bin_displacement=0.1, mask_init_factor=3.0, target_mask_act='sigmoid', score_act='relu')
 
     # Wrap the network for multi GPU training
     if settings.multi_gpu:
@@ -119,11 +119,8 @@ def run(settings):
     optimizer = optim.Adam([{'params': actor.net.classifier.filter_initializer.parameters(), 'lr': 5e-5},
                             {'params': actor.net.classifier.filter_optimizer.parameters(), 'lr': 5e-4},
                             {'params': actor.net.classifier.feature_extractor.parameters(), 'lr': 5e-5},
-                            {'params': actor.net.merge_layer2.parameters(), 'lr': 5e-5},
-                            {'params': actor.net.merge_layer3.parameters(), 'lr': 5e-5},
                             {'params': actor.net.bb_regressor.parameters()},
-                            {'params': actor.net.feature_extractor.parameters(), 'lr': 2e-5},
-                            {'params': actor.net.feature_extractor_depth.parameters(), 'lr': 2e-5}],
+                            {'params': actor.net.feature_extractor.parameters(), 'lr': 2e-5}],
                            lr=2e-4)
 
     lr_scheduler = optim.lr_scheduler.StepLR(optimizer, step_size=15, gamma=0.2)
