@@ -232,43 +232,14 @@ class ATOM(BaseTracker):
         # Convert image
         im = numpy_to_torch(image)
         self.im = im    # For debugging only
-        # '''
-        # Song : add the depth
-        # '''
-        # if 'depth' in info.keys():
-        #     depth = info['depth']
-        #     depth = torch.from_numpy(np.asarray(depth, dtype=np.float32)).float()
-        # else:
-        #     depth = None
+
         # ------- LOCALIZATION ------- #
 
         # Get sample
         sample_pos = self.pos.round()
         sample_scales = self.target_scale * self.params.scale_factors
 
-        # if not depth:
         test_x = self.extract_processed_sample(im, self.pos, sample_scales, self.img_sample_sz)
-        # else:
-            # '''
-            # Song : edited extract_processed_sample
-            # '''
-            # if 'depth_usage' in info.keys():
-            #     depth_usage = info['depth_usage']
-            # else:
-            #     depth_usage = 'default'
-            #
-            # if depth_usage == 'hist_depth_mask':
-            #     test_x = self.extract_processed_sample_hist_depth_mask(im, depth, self.pos, sample_scales, self.img_sample_sz)
-            # elif depth_usage == 'kmeans_depth_mask':
-            #     # Not implemented yet
-            #     test_x = self.extract_processed_sample(im, self.pos, sample_scales, self.img_sample_sz)
-            # elif depth_usage == 'default':
-            #     test_x = self.extract_processed_sample(im, self.pos, sample_scales, self.img_sample_sz)
-            # else:
-            #     '''
-            #     nothing to do , just as the color inputs
-            #     '''
-            #     test_x = self.extract_processed_sample(im, self.pos, sample_scales, self.img_sample_sz)
 
         # Compute scores
         scores_raw = self.apply_filter(test_x)
@@ -294,10 +265,7 @@ class ATOM(BaseTracker):
             self.visdom.register(self.debug_info, 'info_dict', 1, 'Status')
         elif self.params.debug >= 2:
             show_tensor(score_map, 5, title='Max score = {:.2f}'.format(max_score))
-        #
-        # '''
-        #     Song : should I do something when update_state ???
-        # '''
+
         # ------- UPDATE ------- #
 
         # Check flags and set learning rate if hard negative
@@ -444,9 +412,6 @@ class ATOM(BaseTracker):
     def extract_sample(self, im: torch.Tensor, pos: torch.Tensor, scales, sz: torch.Tensor):
         return self.params.features.extract(im, pos, scales, sz)[0]
 
-    # def extract_sample_hist_depth_mask(self, im: torch.Tensor, depth: torch.Tensor, pos: torch.Tensor, scales, sz: torch.Tensor):
-    #     return self.params.features.extract_hist_depth_mask(im, depth, pos, scales, sz)[0]
-
     def get_iou_features(self):
         return self.params.features.get_unique_attribute('iounet_features')
 
@@ -454,13 +419,8 @@ class ATOM(BaseTracker):
         return self.params.features.get_unique_attribute('iounet_backbone_features')
 
     def extract_processed_sample(self, im: torch.Tensor, pos: torch.Tensor, scales, sz: torch.Tensor) -> (TensorList, TensorList):
-        x = self.extract_sample(im, pos, scales, sz)  # Song, this is the feature map from ResNet18
-        # print('Song atom.py line 458: x from ResNet18, extract_sample : ', x.shape)
+        x = self.extract_sample(im, pos, scales, sz)
         return self.preprocess_sample(self.project_sample(x))
-
-    # def extract_processed_sample_hist_depth_mask(self, im: torch.Tensor, depth: torch.Tensor, pos: torch.Tensor, scales, sz: torch.Tensor) -> (TensorList, TensorList):
-    #     x = self.extract_sample_hist_depth_mask(im, depth, pos, scales, sz)
-    #     return self.preprocess_sample(self.project_sample(x))
 
     def preprocess_sample(self, x: TensorList) -> (TensorList, TensorList):
         if self.params.get('_feature_window', False):
