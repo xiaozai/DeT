@@ -54,14 +54,29 @@ class NetWithBackbone(NetWrapper):
 
     def preprocess_image(self, im: torch.Tensor):
         """Normalize the image with the mean and standard deviation used by the network."""
+        dims = im.shape
+        if dims[1] == 6:
+            color = im[:, :3, :, :]
+            depth = im[:, 3:, :, :]
 
-        if self.image_format in ['rgb', 'bgr']:
-            im = im/255
+            color = color/255
+            color -= self._mean
+            color /= self._std
 
-        if self.image_format in ['bgr', 'bgr255']:
-            im = im[:, [2, 1, 0], :, :]
-        im -= self._mean
-        im /= self._std
+            depth = depth/255
+            depth -= self._mean
+            depth /= self._std
+
+            im = torch.cat((color, depth), 1)
+
+        else:
+            if self.image_format in ['rgb', 'bgr']:
+                im = im/255
+
+            if self.image_format in ['bgr', 'bgr255']:
+                im = im[:, [2, 1, 0], :, :]
+            im -= self._mean
+            im /= self._std
 
         if self.use_gpu:
             im = im.cuda()

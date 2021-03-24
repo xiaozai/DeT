@@ -43,13 +43,15 @@ class CDTBDDataset(BaseDataset):
             group = self.dtype
 
         if self.dtype in ['rgbd', 'rgbcolormap']:
-            depth_frames = ['{base_path}/{sequence_path}/depth/{frame:0{nz}}.png'.format(base_path=self.base_path,
-                            sequence_path=sequence_path, frame=frame_num, nz=nz)
-                            for frame_num in range(start_frame, end_frame+1)]
-            color_frames = ['{base_path}/{sequence_path}/color/{frame:0{nz}}.jpg'.format(base_path=self.base_path,
-                            sequence_path=sequence_path, frame=frame_num, nz=nz)
-                            for frame_num in range(start_frame, end_frame+1)]
-            frames = {'color': color_frames, 'depth': depth_frames}
+            frames = [{'color': '{base_path}/{sequence_path}/color/{frame:0{nz}}.jpg'.format(base_path=self.base_path,sequence_path=sequence_path, frame=frame_num, nz=nz),
+                       'depth': '{base_path}/{sequence_path}/depth/{frame:0{nz}}.png'.format(base_path=self.base_path,sequence_path=sequence_path, frame=frame_num, nz=nz)
+                       }for frame_num in range(start_frame, end_frame+1)]
+            # color_frames = ['{base_path}/{sequence_path}/color/{frame:0{nz}}.jpg'.format(base_path=self.base_path,
+            #                 sequence_path=sequence_path, frame=frame_num, nz=nz)
+            #                 for frame_num in range(start_frame, end_frame+1)]
+            # frames = {'color': color_frames, 'depth': depth_frames}
+
+
         else:
             frames = ['{base_path}/{sequence_path}/{group}/{frame:0{nz}}.{ext}'.format(base_path=self.base_path,
                       sequence_path=sequence_path, group=group, frame=frame_num, nz=nz, ext=ext)

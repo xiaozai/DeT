@@ -308,15 +308,7 @@ class DiMP(BaseTracker):
                                                            mode=self.params.get('border_mode', 'replicate'),
                                                            max_scale_change=self.params.get('patch_max_scale_change', None))
         with torch.no_grad():
-            dims = list(im_patches.size())
-            if dims[1] == 3:
-                backbone_feat = self.net.extract_backbone(im_patches)
-            elif dims[1] == 6:
-                backbone_feat_color = self.net.extract_backbone(im_patches[:, :3, :, :])
-                backbone_feat_depth = self.net.extract_backbone(im_patches[:, 3:, :, :])
-                backbone_feat = torch.mul(backbone_feat_color, backbone_feat_depth)
-            else:
-                print('backbone_feat in dimp line 318 is wrong!!!!!!!!!!!!!!!!!!!!!!!')
+            backbone_feat = self.net.extract_backbone(im_patches)
 
         return backbone_feat, patch_coords, im_patches
 
@@ -325,7 +317,7 @@ class DiMP(BaseTracker):
             return self.net.extract_classification_feat(backbone_feat)
 
     def get_iou_backbone_features(self, backbone_feat):
-        return self.net.get_backbone_bbreg_feat(backbone_feat)
+        return self.net.get_backbone_bbreg_feat(backbone_feat) # Song : layer2 and layer3
 
     def get_iou_features(self, backbone_feat):
         with torch.no_grad():
@@ -402,13 +394,7 @@ class DiMP(BaseTracker):
 
         # Extract initial backbone features
         with torch.no_grad():
-            dims = list(im_pathes.size())
-            if dims[1] == 3:
-                init_backbone_feat = self.net.extract_backbone(im_patches)
-            elif dims[1] == 6:
-                init_backbone_feat_color = self.net.extract_backbone(im_patches[:, :3, :, :])
-                init_backbone_feat_depth = self.net.extract_backbone(im_patches[:, 3:, :, :])
-                init_backbone_feat = torch.mul(init_backbone_feat_color, init_backbone_feat_depth)
+            init_backbone_feat = self.net.extract_backbone(im_patches)
 
         return init_backbone_feat
 
@@ -808,9 +794,9 @@ class DiMP(BaseTracker):
 
         # Initial box for refinement
         init_box = self.get_iounet_box(self.pos, self.target_sz, sample_pos, sample_scale)
-
-        # Extract features from the relevant scale
         iou_features = self.get_iou_features(backbone_feat)
+
+        # iou_features = self.get_iou_features(backbone_feat)
         iou_features = TensorList([x[scale_ind:scale_ind+1,...] for x in iou_features])
 
         # Generate random initial boxes

@@ -21,7 +21,10 @@ def _save_tracker_output(seq: Sequence, tracker: Tracker, output: dict, run_id=N
 
     segmentation_path = os.path.join(tracker.segmentation_dir, seq.name)
 
-    frame_names = [os.path.splitext(os.path.basename(f))[0] for f in seq.frames]
+    if type(seq.frames[0]) is dict:
+        frame_names = [os.path.splitext(os.path.basename(f['color']))[0] for f in seq.frames]
+    else:
+        frame_names = [os.path.splitext(os.path.basename(f))[0] for f in seq.frames]
 
     def save_bb(file, data):
         tracked_bb = np.array(data).astype(int)

@@ -200,8 +200,22 @@ class ATOMResNet18(MultiFeatureBase):
 
     def extract(self, im: torch.Tensor):
         im = im / 255
-        im -= self.mean
-        im /= self.std
+
+        dims = im.shape
+        if dims[1] == 6:
+            rgb = im[:, :3, :, :]
+            depth = im[:, 3:, :, :]
+
+            rgb -= self.mean
+            depth -= self.mean
+
+            rgb /= self.std
+            depth /= self.std
+
+            im = torch.cat((rgb, depth),1)
+        else:
+            im -= self.mean
+            im /= self.std
 
         if self.use_gpu:
             im = im.cuda()
