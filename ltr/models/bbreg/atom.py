@@ -137,8 +137,12 @@ class ATOMnet_DeT(nn.Module):
             feat['layer3'] = self.merge_layer3(torch.cat((color_feat['layer3'], depth_feat['layer3']), 1))
 
         elif self.merge_type == 'max':
-            feat['layer2'] = torch.maximum(color_feat['layer2'], depth_feat['layer2'])
-            feat['layer3'] = torch.maximum(color_feat['layer3'], depth_feat['layer3'])
+            # feat['layer2'] = torch.maximum(color_feat['layer2'], depth_feat['layer2'])
+            # feat['layer3'] = torch.maximum(color_feat['layer3'], depth_feat['layer3'])
+
+            # for Torch 1.4.0
+            feat['layer2'] = torch.max(color_feat['layer2'], depth_feat['layer2'])
+            feat['layer3'] = torch.max(color_feat['layer3'], depth_feat['layer3'])
 
         elif self.merge_type == 'mul':
             feat['layer2'] = torch.mul(color_feat['layer2'], depth_feat['layer2'])
@@ -156,7 +160,7 @@ class ATOMnet_DeT(nn.Module):
 
 
 @model_constructor
-def atom_restnet18_DeT(iou_input_dim=(256,256), iou_inter_dim=(256,256), backbone_pretrained=True, merge_type='mean'):
+def atom_resnet18_DeT(iou_input_dim=(256,256), iou_inter_dim=(256,256), backbone_pretrained=True, merge_type='mean'):
     # backbones
     backbone_net = backbones.resnet18(pretrained=backbone_pretrained)
     backbone_net_depth = backbones.resnet18(pretrained=backbone_pretrained)

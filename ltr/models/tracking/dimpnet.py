@@ -91,8 +91,13 @@ class DiMPnet_DeT(nn.Module):
             feat['layer3'] = self.merge_layer3(torch.cat((color_feat['layer3'], depth_feat['layer3']), 1))
 
         elif self.merge_type == 'max':
-            feat['layer2'] = torch.maximum(color_feat['layer2'], depth_feat['layer2'])
-            feat['layer3'] = torch.maximum(color_feat['layer3'], depth_feat['layer3'])
+            # for Torch 1.7.1
+            # feat['layer2'] = torch.maximum(color_feat['layer2'], depth_feat['layer2'])
+            # feat['layer3'] = torch.maximum(color_feat['layer3'], depth_feat['layer3'])
+
+            # for Torch 1.4.0
+            feat['layer2'] = torch.max(color_feat['layer2'], depth_feat['layer2'])
+            feat['layer3'] = torch.max(color_feat['layer3'], depth_feat['layer3'])
 
         elif self.merge_type == 'mul':
             feat['layer2'] = torch.mul(color_feat['layer2'], depth_feat['layer2'])

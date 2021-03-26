@@ -38,17 +38,25 @@ def run_tracker(tracker_name, tracker_param, run_id=None, dataset_name='cdtb', d
 
 '''  One more parameter,
         --input_dtype : including rgb, rgbcolormap, colormap, raw_depth, normalized_depth, rgb_rawdepth, rgb_normdepth,
-                        here, we use the rgbcolormap, which includes the rgb + colormap of depth images, 
+                        here, we use the rgbcolormap, which includes the rgb + colormap of depth images,
+
+
+    CUDA_VISIBLE_DEVICES=0 python run_tracker.py dimp DeT_DiMP50_Max --dataset_name depthtrack --input_dtype rgbcolormap --sequence adapter01_indoor --debug 1
+
+    CUDA_VISIBLE_DEVICES=0 python run_tracker.py dimp DeT_DiMP50_Max --dataset_name depthtrack --input_dtype rgbcolormap
+
+    CUDA_VISIBLE_DEVICES=0 python run_tracker.py dimp DeT_DiMP50_Max --dataset_name cdtb --input_dtype rgbcolormap
+    
 '''
 def main():
     parser = argparse.ArgumentParser(description='Run tracker on sequence or dataset.')
     parser.add_argument('tracker_name', type=str, help='Name of tracking method.')
     parser.add_argument('tracker_param', type=str, help='Name of parameter file.')
-    parser.add_argument('--runid', type=int, default=None, help='The run id.')
     parser.add_argument('--dataset_name', type=str, default='otb', help='Name of dataset (otb, nfs, uav, tpl, vot, tn, gott, gotv, lasot).')
     parser.add_argument('--input_dtype', type=str, default='colormap', help='[colormap, raw depth, normalized_depth, ....]')
     parser.add_argument('--sequence', type=str, default=None, help='Sequence number or name.')
     parser.add_argument('--debug', type=int, default=0, help='Debug level.')
+    parser.add_argument('--runid', type=int, default=None, help='The run id.')
     parser.add_argument('--threads', type=int, default=0, help='Number of threads.')
     parser.add_argument('--use_visdom', type=bool, default=True, help='Flag to enable visdom.')
     parser.add_argument('--visdom_server', type=str, default='127.0.0.1', help='Server for visdom.')

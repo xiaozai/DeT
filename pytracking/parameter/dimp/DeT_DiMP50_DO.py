@@ -60,7 +60,7 @@ def parameters():
     params.box_refinement_step_length = 1
     params.box_refinement_step_decay = 1
 
-    params.net = NetWithBackbone(net_path='/home/sgn/Data1/yan/pytracking-models/checkpoints/ltr/dimp/dimp50D_colormap_All/ep0050.pth.tar',
+    params.net = NetWithBackbone(net_path='/home/yan/Data2/DeT-models/DeT_DiMP50_DO.pth.tar',
                                  use_gpu=params.use_gpu)
 
     params.vot_anno_conversion_type = 'preserve_area'

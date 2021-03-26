@@ -1,5 +1,5 @@
 import torch
-from pytracking.features.preprocessing import sample_patch, sample_patch_hist_depth_mask
+from pytracking.features.preprocessing import sample_patch
 from pytracking import TensorList
 
 class ExtractorBase:
