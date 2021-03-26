@@ -4,11 +4,9 @@ Code for the paper "DepthTrack: Unveiling the Power of RGBD Tracking"
 The settings are same as that of Pytracking, please read the document of Pytracking for details.
 
 ### Download
-1) Download the checkpoints from xxxx and put them into pytracking/networks/
+1) Download the dataset from xxxx  and edit the path in local.py
 
-2) Download the dataset from xxxx  and edit the path in local.py
-
-3) Download the checkpoints for DeT trackers (in install.sh)
+2) Download the checkpoints for DeT trackers (in install.sh)
 ```
 gdown https://drive.google.com/uc\?id\=1djSx6YIRmuy3WFjt9k9ZfI8q343I7Y75 -O pytracking/networks/DeT_DiMP50_Max.pth
 gdown https://drive.google.com/uc\?id\=1JW3NnmFhX3ZnEaS3naUA05UaxFz6DLFW -O pytracking/networks/DeT_DiMP50_Mean.pth
