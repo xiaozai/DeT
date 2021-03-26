@@ -5,9 +5,9 @@ def local_env_settings():
 
     # Set your local paths here.
 
-
+    settings.cdtb_path = '/home/yan/Data2/vot-workspace-CDTB/sequences/'
     settings.davis_dir = ''
-    settings.trackingnet_path = ''
+    settings.depthtrack_path = '/home/yan/Data2/vot-workspace-DepthTrack/sequences/'
     settings.got10k_path = ''
     settings.got_packed_results_path = ''
     settings.got_reports_path = ''
@@ -20,11 +20,9 @@ def local_env_settings():
     settings.segmentation_path = '/home/yan/Data2/DeT/pytracking/segmentation_results/'
     settings.tn_packed_results_path = ''
     settings.tpl_path = ''
+    settings.trackingnet_path = ''
     settings.uav_path = ''
     settings.vot_path = ''
     settings.youtubevos_dir = ''
-
-    settings.cdtb_path = '/home/yan/Data2/vot-workspace-CDTB/sequences/'
-    settings.depthtrack_path = '/home/yan/Data2/vot-workspace-DepthTrack/sequences/'
 
     return settings

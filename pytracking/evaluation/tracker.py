@@ -705,12 +705,16 @@ class Tracker:
         for i, box in enumerate(boxes, start=1):
             col = _tracker_disp_colors[i]
             col = [float(c) / 255.0 for c in col]
-            rect = patches.Rectangle((box[0], box[1]), box[2], box[3], linewidth=1, edgecolor=col, facecolor='none')
+            rect = patches.Rectangle((box[0], box[1]), box[2], box[3], linewidth=2, edgecolor=col, facecolor='none')
             self.ax.add_patch(rect)
+            if dims[-1] == 6 :
+                # depth_col = [1.0, 1.0, 1.0]
+                rect_depth = patches.Rectangle((box[0]+dims[1], box[1]), box[2], box[3], linewidth=2, edgecolor=col, facecolor='none')
+                self.ax.add_patch(rect_depth)
 
         if getattr(self, 'gt_state', None) is not None:
             gt_state = self.gt_state
-            rect = patches.Rectangle((gt_state[0], gt_state[1]), gt_state[2], gt_state[3], linewidth=1, edgecolor='g', facecolor='none')
+            rect = patches.Rectangle((gt_state[0], gt_state[1]), gt_state[2], gt_state[3], linewidth=2, edgecolor='g', facecolor='none')
             self.ax.add_patch(rect)
         self.ax.set_axis_off()
         self.ax.axis('equal')
@@ -743,6 +747,10 @@ class Tracker:
             color_image = cv.imread(image_file['color'])
             color = cv.cvtColor(color_image, cv.COLOR_BGR2RGB)
             depth_image = cv.imread(image_file['depth'], -1)
+
+            max_depth = min(np.median(depth_image) * 3, 10000) # 10 meter, in the most frames in CDTB and DepthTrack , the depth of target is smaller than 10 m
+            depth_image[depth_image>max_depth] = max_depth
+
             depth_image = cv.normalize(depth_image, None, alpha=0, beta=255, norm_type=cv.NORM_MINMAX, dtype=cv.CV_32F)
             depth_image = np.asarray(depth_image, dtype=np.uint8)
             depth_image = cv.applyColorMap(depth_image, cv.COLORMAP_JET)

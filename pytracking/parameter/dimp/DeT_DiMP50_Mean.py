@@ -62,7 +62,7 @@ def parameters():
 
     params.merge_type = 'conv'
 
-    params.net = NetWithBackbone(net_path='/home/yan/Data2/DeT-models/DeT_DiMP50_Mean.pth.tar',
+    params.net = NetWithBackbone(net_path='DeT_DiMP50_Mean.pth',
                                  use_gpu=params.use_gpu)
 
     params.vot_anno_conversion_type = 'preserve_area'
