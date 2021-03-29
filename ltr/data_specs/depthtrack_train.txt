@@ -43,7 +43,7 @@ leaves01_wild
 bike02_wild
 cup13_indoor
 mushroom02_wild
-bike03_wild 
+bike03_wild
 cup14_indoor
 mushroom03_wild
 book02_indoor

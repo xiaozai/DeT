@@ -1,6 +1,6 @@
 class EnvironmentSettings:
     def __init__(self):
-        self.workspace_dir = ''    # Base directory for saving network checkpoints.
+        self.workspace_dir = '/home/sgn/Data1/yan/DeT/'    # Base directory for saving network checkpoints.
         self.tensorboard_dir = self.workspace_dir + '/tensorboard/'    # Directory for tensorboard files.
         self.pretrained_networks = self.workspace_dir + '/pretrained_networks/'
         self.lasot_dir = ''
@@ -17,6 +17,6 @@ class EnvironmentSettings:
         self.davis_dir = ''
         self.youtubevos_dir = ''
         self.cdtb_dir = ''
-        self.depthtracker_dir = ''
-        self.lasotdepth_dir = ''
-        self.cocodepth_dir = ''
+        self.depthtrack_dir = '/home/sgn/Data1/yan/Datasets/DeTrack-v1/train_annotated/'
+        self.lasotdepth_dir = '/home/sgn/Data1/yan/Datasets/EstimatedDepth/LaSOT/'
+        self.cocodepth_dir = '/home/sgn/Data1/yan/Datasets/EstimatedDepth/COCO/'

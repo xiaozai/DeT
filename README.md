@@ -23,6 +23,10 @@ bash install.sh path-to-anaconda DeT
 ```
 
 ### Train
+Using the default DiMP50 or ATOM pretrained checkpoints can reduce the training time.
+
+For example, move the default dimp50.pth into the checkpoints folder and rename as DiMPNet_Det_EP0050.pth.tar
+
 ```
 python run_training.py bbreg DeT_ATOM_Max
 python run_training.py bbreg DeT_ATOM_Mean

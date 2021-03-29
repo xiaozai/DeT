@@ -25,7 +25,7 @@ def create_default_local_file():
         'davis_dir': empty_str,
         'youtubevos_dir': empty_str,
         'cdtb_dir': empty_str,
-        'depthtracker_dir': empty_str,
+        'depthtrack_dir': empty_str,
         'lasotdepth_dir': empty_str,
         'cocodepth_dir': empty_str})
 

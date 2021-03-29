@@ -73,7 +73,7 @@ def run(settings):
                                                     joint_transform=transform_joint)
 
     # Train sampler and loader
-    dataset_train = sampler.DiMPSampler([coco_train, lasot_depth_train, depthtrack_train, depthtrack_horizontal_train, depthtrack_vertical_train], [1, 1, 1, 1, 1],
+    dataset_train = sampler.DiMPSampler([coco_train, lasot_depth_train, depthtrack_train], [1, 1, 1],
                                         samples_per_epoch=26000, max_gap=30, num_test_frames=3, num_train_frames=3,
                                         processing=data_processing_train)
 
