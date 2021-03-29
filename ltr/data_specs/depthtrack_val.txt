@@ -1,0 +1,9 @@
+toydog_indoor
+book06_indoor
+duck05_wild
+trashbin_indoor
+bottle05_indoor
+duck06_wild
+trophy_indoor
+bottle06_indoor
+dumbbells02_indoor

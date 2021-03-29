@@ -37,7 +37,7 @@ def run(settings):
 
     # Validation datasets
     # cdtb_val = CDTB(settings.env.cdtb_dir, split='val', dtype='rgbcolormap')
-    depthtrack_val = DepthTrack(root=settings.env.depthtrack_dir, split='va', dtype='rgbcolormap')
+    depthtrack_val = DepthTrack(root=settings.env.depthtrack_dir, split='val', dtype='rgbcolormap')
 
     # Data transform
     transform_joint = tfm.Transform(tfm.ToGrayscale(probability=0.05))

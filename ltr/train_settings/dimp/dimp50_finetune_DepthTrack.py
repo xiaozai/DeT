@@ -35,8 +35,8 @@ def run(settings):
     # coco_train = MSCOCOSeq_depth(settings.env.cocodepth_dir, dtype='colormap')
     # lasot_depth_train = Lasot_depth(root=settings.env.lasotdepth_dir, dtype='colormap')
     depthtrack_train = DepthTrack(root=settings.env.depthtrack_dir,  split='train', dtype='color')
-    depthtrack_horizontal_train = DepthTrack(root=settings.env.depthtrack_horizontal_dir, split='train', dtype='color')
-    depthtrack_vertical_train = DepthTrack(root=settings.env.depthtrack_vertical_dir, split='train', dtype='color')
+    # depthtrack_horizontal_train = DepthTrack(root=settings.env.depthtrack_horizontal_dir, split='train', dtype='color')
+    # depthtrack_vertical_train = DepthTrack(root=settings.env.depthtrack_vertical_dir, split='train', dtype='color')
 
     # Validation datasets
     # got10k_val = Got10k(settings.env.got10k_dir, split='votval')
@@ -77,7 +77,7 @@ def run(settings):
                                                     joint_transform=transform_joint)
 
     # Train sampler and loader
-    dataset_train = sampler.DiMPSampler([depthtrack_train, depthtrack_horizontal_train, depthtrack_vertical_train], [1, 0.25, 0.25],
+    dataset_train = sampler.DiMPSampler([depthtrack_train], [1],
                                         samples_per_epoch=26000, max_gap=30, num_test_frames=3, num_train_frames=3,
                                         processing=data_processing_train)
 

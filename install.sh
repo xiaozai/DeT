@@ -109,11 +109,11 @@ echo ""
 echo "****************** DiMP50 Network ******************"
 gdown https://drive.google.com/uc\?id\=1qgachgqks2UGjKx-GdO1qylBDdB1f9KN -O pytracking/networks/dimp50.pth
 # gdown https://drive.google.com/uc\?id\=1MAjrRJDCbL0DSjUKFyDkUuYS1-cYBNjk -O pytracking/networks/dimp18.pth
-
-echo ""
-echo ""
-echo "****************** ATOM Network ******************"
-gdown https://drive.google.com/uc\?id\=1VNyr-Ds0khjM0zaq6lU-xfY74-iWxBvU -O pytracking/networks/atom_default.pth
+#
+# echo ""
+# echo ""
+# echo "****************** ATOM Network ******************"
+# gdown https://drive.google.com/uc\?id\=1VNyr-Ds0khjM0zaq6lU-xfY74-iWxBvU -O pytracking/networks/atom_default.pth
 
 # echo ""
 # echo ""
@@ -125,38 +125,38 @@ echo ""
 echo ""
 echo "****************** DeT-DiMP50-Max **************************"
 gdown https://drive.google.com/uc\?id\=1djSx6YIRmuy3WFjt9k9ZfI8q343I7Y75 -O pytracking/networks/DeT_DiMP50_Max.pth
-
-
-echo ""
-echo ""
-echo "****************** DeT-DiMP50-Mean **************************"
-gdown https://drive.google.com/uc\?id\=1JW3NnmFhX3ZnEaS3naUA05UaxFz6DLFW -O pytracking/networks/DeT_DiMP50_Mean.pth
-
-echo ""
-echo ""
-echo "****************** DeT-DiMP50-MC **************************"
-gdown https://drive.google.com/uc\?id\=1wcGJc1Xq_7d-y-1nWh6M7RaBC1AixRTu -O pytracking/networks/DeT_DiMP50_MC.pth
-
-echo ""
-echo ""
-echo "****************** DeT-DiMP50-DO **************************"
-gdown https://drive.google.com/uc\?id\=17IIroLZ0M_ZVuxkGN6pVy4brTpicMrn8 -O pytracking/networks/DeT_DiMP50_DO.pth
+#
+#
+# echo ""
+# echo ""
+# echo "****************** DeT-DiMP50-Mean **************************"
+# gdown https://drive.google.com/uc\?id\=1JW3NnmFhX3ZnEaS3naUA05UaxFz6DLFW -O pytracking/networks/DeT_DiMP50_Mean.pth
+#
+# echo ""
+# echo ""
+# echo "****************** DeT-DiMP50-MC **************************"
+# gdown https://drive.google.com/uc\?id\=1wcGJc1Xq_7d-y-1nWh6M7RaBC1AixRTu -O pytracking/networks/DeT_DiMP50_MC.pth
+#
+# echo ""
+# echo ""
+# echo "****************** DeT-DiMP50-DO **************************"
+# gdown https://drive.google.com/uc\?id\=17IIroLZ0M_ZVuxkGN6pVy4brTpicMrn8 -O pytracking/networks/DeT_DiMP50_DO.pth
 
 echo ""
 echo ""
 echo "****************** DeT-ATOM-Max **************************"
 gdown https://drive.google.com/uc\?id\=17aaOiQW-zRCCqPePLQ9u1s466qCtk7Lh -O pytracking/networks/DeT_ATOM_Max.pth
 
-echo ""
-echo ""
-echo "****************** DeT-ATOM-Mean **************************"
-gdown https://drive.google.com/uc\?id\=15LqCjNelRx-pOXAwVd1xwiQsirmiSLmK -O pytracking/networks/DeT_ATOM_Mean.pth
-
-echo ""
-echo ""
-echo "****************** DeT-ATOM-MC **************************"
-gdown https://drive.google.com/uc\?id\=14wyUaG-pOUu4Y2MPzZZ6_vvtCuxjfYPg -O pytracking/networks/DeT_ATOM_MC.pth
-
+# echo ""
+# echo ""
+# echo "****************** DeT-ATOM-Mean **************************"
+# gdown https://drive.google.com/uc\?id\=15LqCjNelRx-pOXAwVd1xwiQsirmiSLmK -O pytracking/networks/DeT_ATOM_Mean.pth
+#
+# echo ""
+# echo ""
+# echo "****************** DeT-ATOM-MC **************************"
+# gdown https://drive.google.com/uc\?id\=14wyUaG-pOUu4Y2MPzZZ6_vvtCuxjfYPg -O pytracking/networks/DeT_ATOM_MC.pth
+#
 
 echo ""
 echo ""
