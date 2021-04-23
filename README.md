@@ -4,13 +4,10 @@ Code for the paper "DepthTrack: Unveiling the Power of RGBD Tracking"
 The settings are same as that of Pytracking, please read the document of Pytracking for details.
 
 ### Download
-1) Download the training dataset and edit the path in local.py
+1) Download the training dataset for Zenodo (DepthTrack RGBD Tracking Benchmark) and edit the path in local.py
 More data will be collected in future, we hope to bring a large scale RGBD training dataset.
 ```
-gdown https://drive.google.com/uc\?id\=1EHKfcFlhPymfcqUYE73pUV_V7dG1ziWM -O dataset/DepthTrack/train_group01.zip
-gdown https://drive.google.com/uc\?id\= -O dataset/DepthTrack/train_group02.zip
-gdown https://drive.google.com/uc\?id\= -O dataset/DepthTrack/train_group03.zip
-
+http://doi.org/10.5281/zenodo.4716441
 ```
 
 2) Download the checkpoints for DeT trackers (in install.sh)
