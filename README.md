@@ -4,7 +4,13 @@ Code for the paper "DepthTrack: Unveiling the Power of RGBD Tracking"
 The settings are same as that of Pytracking, please read the document of Pytracking for details.
 
 ### Download
-1) Download the dataset from xxxx  and edit the path in local.py
+1) Download the training dataset and edit the path in local.py
+```
+gdown https://drive.google.com/uc\?id\= -O dataset/DepthTrack/train_group01.zip
+gdown https://drive.google.com/uc\?id\= -O dataset/DepthTrack/train_group02.zip
+gdown https://drive.google.com/uc\?id\= -O dataset/DepthTrack/train_group03.zip
+
+```
 
 2) Download the checkpoints for DeT trackers (in install.sh)
 ```
