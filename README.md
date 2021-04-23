@@ -6,7 +6,7 @@ The settings are same as that of Pytracking, please read the document of Pytrack
 ### Download
 1) Download the training dataset and edit the path in local.py
 ```
-gdown https://drive.google.com/uc\?id\= -O dataset/DepthTrack/train_group01.zip
+gdown https://drive.google.com/uc\?id\=1EHKfcFlhPymfcqUYE73pUV_V7dG1ziWM -O dataset/DepthTrack/train_group01.zip
 gdown https://drive.google.com/uc\?id\= -O dataset/DepthTrack/train_group02.zip
 gdown https://drive.google.com/uc\?id\= -O dataset/DepthTrack/train_group03.zip
 
