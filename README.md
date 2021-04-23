@@ -4,8 +4,8 @@ Code for the paper "DepthTrack: Unveiling the Power of RGBD Tracking"
 The settings are same as that of Pytracking, please read the document of Pytracking for details.
 
 ### Download
-1) Download the training dataset for Zenodo (DepthTrack RGBD Tracking Benchmark) and edit the path in local.py
-More data will be collected in future, we hope to bring a large scale RGBD training dataset.
+1) Download the training dataset from Zenodo (DepthTrack RGBD Tracking Benchmark) and edit the path in local.py
+More data will be uploaded soon, we hope to bring a large scale RGBD training dataset.
 ```
 http://doi.org/10.5281/zenodo.4716441
 ```
