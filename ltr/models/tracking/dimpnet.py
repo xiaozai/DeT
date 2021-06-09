@@ -331,7 +331,7 @@ def dimpnet50(filter_size=1, optim_iter=5, optim_init_step=1.0, optim_init_reg=0
     return net
 
 @model_constructor
-def dimpnet50_DeT(filter_size=1, optim_iter=5, optim_init_step=1.0, optim_init_reg=0.01,
+def dimp50_DeT(filter_size=1, optim_iter=5, optim_init_step=1.0, optim_init_reg=0.01,
               classification_layer='layer3', feat_stride=16, backbone_pretrained=True, clf_feat_blocks=0,
               clf_feat_norm=True, init_filter_norm=False, final_conv=True,
               out_feature_dim=512, init_gauss_sigma=1.0, num_dist_bins=5, bin_displacement=1.0,

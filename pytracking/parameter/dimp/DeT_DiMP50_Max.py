@@ -62,7 +62,7 @@ def parameters():
 
     params.merge_type = 'conv'
 
-    params.net = NetWithBackbone(net_path='DeT_DiMP50_Max.pth',
+    params.net = NetWithBackbone(net_path='DeT_DiMP50_Max.pth.tar',
                                  use_gpu=params.use_gpu)
 
     params.vot_anno_conversion_type = 'preserve_area'
