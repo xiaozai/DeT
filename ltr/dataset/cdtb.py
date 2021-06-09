@@ -197,6 +197,13 @@ class CDTB(BaseVideoDataset):
             dp = cv.normalize(dp, None, alpha=0, beta=255, norm_type=cv.NORM_MINMAX)
             dp = np.asarray(dp, dtype=np.uint8)
             img = cv.merge((r, g, b, dp))
+
+        elif self.dtype == 'rgb3d':
+            dp = cv2.normalize(dp, None, alpha=0, beta=255, norm_type=cv2.NORM_MINMAX)
+            dp = np.asarray(dp, dtype=np.uint8)
+            dp = cv2.merge((dp, dp, dp))
+            img = cv2.merge((rgb, dp))
+            
         else:
             print('no such dtype ... : %s'%self.dtype)
             img = None

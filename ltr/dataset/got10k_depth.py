@@ -198,9 +198,15 @@ class Got10k_depth(BaseVideoDataset):
             colormap = cv2.applyColorMap(dp, cv2.COLORMAP_JET)
             img = cv2.merge((rgb, colormap))
 
+        elif self.dtype == 'rgb3d':
+            dp = cv2.normalize(dp, None, alpha=0, beta=255, norm_type=cv2.NORM_MINMAX)
+            dp = np.asarray(dp, dtype=np.uint8)
+            dp = cv2.merge((dp, dp, dp))
+            img = cv2.merge((rgb, dp))
+            
         elif self.dtype == 'color':
             img = rgb
-            
+
         return img
 
     def get_class_name(self, seq_id):
