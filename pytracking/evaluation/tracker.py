@@ -756,6 +756,20 @@ class Tracker:
             depth_image = cv.applyColorMap(depth_image, cv.COLORMAP_JET)
             img = cv.merge((color_image, depth_image))
 
+        elif dtype == 'rgb3d':
+            color_image = cv.imread(image_file['color'])
+            color = cv.cvtColor(color_image, cv.COLOR_BGR2RGB)
+            depth_image = cv.imread(image_file['depth'], -1)
+
+            max_depth = min(np.median(depth_image) * 3, 10000) # 10 meter, in the most frames in CDTB and DepthTrack , the depth of target is smaller than 10 m
+            depth_image[depth_image>max_depth] = max_depth
+
+            depth_image = cv.normalize(depth_image, None, alpha=0, beta=255, norm_type=cv.NORM_MINMAX, dtype=cv.CV_32F)
+            depth_image = np.asarray(depth_image, dtype=np.uint8)
+            # depth_image = cv.applyColorMap(depth_image, cv.COLORMAP_JET)
+            depth_image = cv.merge((depth_image, depth_image, depth_image))
+            img = cv.merge((color_image, depth_image))
+
         elif dtype in ['colormap', 'normalized_depth', 'raw_depth', 'centered_colormap', 'centered_normalized_depth', 'centered_raw_depth']:
             depth_image_file = image_file
             dp = cv.imread(depth_image_file, -1)

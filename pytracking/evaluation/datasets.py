@@ -17,7 +17,8 @@ dataset_dict = dict(
     cdtb=DatasetInfo(module=pt % "cdtb", class_name="CDTBDDataset", kwargs=dict(dtype='color')),
     cdtb_st=DatasetInfo(module=pt % "cdtb_st", class_name="CDTBD_STDataset", kwargs=dict(dtype='color')),
     depthtrack=DatasetInfo(module=pt % "depthtrack", class_name="DepthTrackDataset", kwargs=dict(dtype='rgbcolormap')),
-
+    depthtrack_st=DatasetInfo(module=pt % "depthtrack_st", class_name="DepthTrack_ST_Dataset", kwargs=dict(dtype='rgbcolormap')),
+    
     trackingnet=DatasetInfo(module=pt % "trackingnet", class_name="TrackingNetDataset", kwargs=dict()),
     got10k_test=DatasetInfo(module=pt % "got10k", class_name="GOT10KDataset", kwargs=dict(split='test')),
     got10k_val=DatasetInfo(module=pt % "got10k", class_name="GOT10KDataset", kwargs=dict(split='val')),
