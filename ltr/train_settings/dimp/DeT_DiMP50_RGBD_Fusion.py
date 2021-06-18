@@ -29,7 +29,7 @@ def run(settings):
     # settings.print_stats = ['Loss/total', 'Loss/iou', 'ClfTrain/clf_ce', 'ClfTrain/test_loss']
 
 
-    merge = 'max'
+    merge = 'sum'
     # Train datasets
     input_dtype = 'rgb3d' # 'rgbcolormap'
     coco_train = MSCOCOSeq_depth(settings.env.cocodepth_dir, dtype=input_dtype)

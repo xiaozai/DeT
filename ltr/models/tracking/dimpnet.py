@@ -477,13 +477,12 @@ def dimp50_RGBD_Fusion(filter_size=1, optim_iter=5, optim_init_step=1.0, optim_i
                       mask_init_factor=4.0, iou_input_dim=(256, 256), iou_inter_dim=(256, 256),
                       score_act='relu', act_param=None, target_mask_act='sigmoid',
                       detach_length=float('Inf'), frozen_backbone_layers=(),
-                      merge='max'):
+                      merge='conv'):
 
     # Backbone
     backbone_net = backbones.resnet50_rgbd_fusion(pretrained=backbone_pretrained, frozen_layers=frozen_backbone_layers,
-                                                  pretrained_path=['', ''],
+                                                  pretrained_path=['', '/home/sgn/Data1/yan/pytracking-models/checkpoints/ltr/dimp/DOT_D3_DepthTrack_Three_SP/DiMPnet_ep0050.pth.tar'],
                                                   merge=merge)
-                                                  # pretrained_path=['', '/home/sgn/Data1/yan/pytracking-models/checkpoints/ltr/dimp/DOT_D3_DepthTrack_Three_SP/DiMPnet_ep0050.pth.tar'],
 
     # Feature normalization
     norm_scale = math.sqrt(1.0 / (out_feature_dim * filter_size * filter_size))

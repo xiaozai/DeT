@@ -232,8 +232,8 @@ class ResNet_RGBD_Fusion(Backbone):
 
         if self.merge == 'conv':
             self.merge_layers = []
-            self.merge_layers['conv1'] = nn.Conv2d(in_planes*2, in_planes, kernel_size=1, stride=1, bias=False)
-            self.merge_layers['layer1'] = nn.Conv2d(in_planes*4, in_planes*2, kernel_size=1, stride=1, bias=False)
+            # self.merge_layers['conv1'] = nn.Conv2d(in_planes*2, in_planes, kernel_size=1, stride=1, bias=False)
+            # self.merge_layers['layer1'] = nn.Conv2d(in_planes*4, in_planes*2, kernel_size=1, stride=1, bias=False)
             self.merge_layers['layer2'] = nn.Conv2d(in_planes*8, in_planes*4, kernel_size=1, stride=1, bias=False)
             self.merge_layers['layer3'] = nn.Conv2d(in_planes*16, in_planes*8, kernel_size=1, stride=1, bias=False)
             self.merge_layers['layer4'] = nn.Conv2d(in_planes*32, in_planes*16, kernel_size=1, stride=1, bias=False)
@@ -360,7 +360,7 @@ class ResNet_RGBD_Fusion(Backbone):
         x_depth = self.bn1_depth(x_depth)
         x_depth = self.relu(x_depth)
 
-        x_rgb, x_depth = self._merge(x_rgb, x_depth, layer='conv1')
+        # x_rgb, x_depth = self._merge(x_rgb, x_depth, layer='conv1')
 
         if self._add_output_and_check('conv1', x_rgb, outputs, output_layers):
             return outputs
@@ -371,7 +371,9 @@ class ResNet_RGBD_Fusion(Backbone):
 
         x_rgb = self.layer1_rgb(x_rgb)
         x_depth = self.layer1_depth(x_depth)
-        x_rgb, x_depth = self._merge(x_rgb, x_depth, layer='layer1')
+
+
+        # x_rgb, x_depth = self._merge(x_rgb, x_depth, layer='layer1')
 
         if self._add_output_and_check('layer1', x_rgb, outputs, output_layers):
             return outputs
@@ -409,7 +411,7 @@ class ResNet_RGBD_Fusion(Backbone):
 
         x_rgb = self.fc_rgb(x_rgb)
         x_depth = self.fc_depth(x_depth)
-        x_rgb, x_depth = self._merge(x_rgb, x_depth, layer='fc')
+        # x_rgb, x_depth = self._merge(x_rgb, x_depth, layer='fc')
 
         if self._add_output_and_check('fc', x_rgb, outputs, output_layers):
             return outputs

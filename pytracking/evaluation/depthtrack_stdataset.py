@@ -1,14 +1,14 @@
 import numpy as np
 from pytracking.evaluation.data import Sequence, BaseDataset, SequenceList
+import os 
 
-
-class DepthTrackDataset(BaseDataset):
+class DepthTrack_ST_Dataset(BaseDataset):
     """
     CDTB, RGB dataset, Depth dataset, Colormap dataset, RGB+depth
     """
     def __init__(self, dtype='colormap'):
         super().__init__()
-        self.base_path = self.env_settings.depthtrack_path
+        self.base_path = self.env_settings.depthtrack_st_path
         self.sequence_list = self._get_sequence_list()
         self.dtype = dtype
 
