@@ -1,7 +1,9 @@
 # DeT
-Code for the paper "DepthTrack: Unveiling the Power of RGBD Tracking"
+Code for the ICCV2021 paper "DepthTrack: Unveiling the Power of RGBD Tracking"
 
 The settings are same as that of Pytracking, please read the document of Pytracking for details.
+
+Dataset will be updated soon.
 
 ### Download
 1) Download the training dataset from Zenodo (DepthTrack RGBD Tracking Benchmark) and edit the path in local.py
