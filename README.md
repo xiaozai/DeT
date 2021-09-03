@@ -7,19 +7,29 @@ Dataset will be updated soon.
 
 ### Generated Depth
 We highly recommend to generate high quality depth data from the existing RGB tracking benchmarks, such as [LaSOT](http://vision.cs.stonybrook.edu/~lasot/), [Got10K](http://got-10k.aitestunion.com/), [TrackingNet](https://tracking-net.org/), and [COCO](https://cocodataset.org/#home).
-In our paper, we used the [DenseDepth](https://github.com/ialhashim/DenseDepth) monocular depth estimation method. 
+
+![Examples of generated depth images, the first row is from HighResDepth for LaSOT RGB images, the second and the third are from DenseDepth for Got10K and COCO RGB images, the forth row is for the failure cases. The last row is from DenseDepth for CDTB RGB images.](imgs/generated_depth.pdf)
+
+In our paper, we used the [DenseDepth](https://github.com/ialhashim/DenseDepth) monocular depth estimation method.
 ```
-Alhashim, Ibraheem, and Peter Wonka. 
-"High quality monocular depth estimation via transfer learning." 
+Alhashim, Ibraheem, and Peter Wonka.
+"High quality monocular depth estimation via transfer learning."
 arXiv preprint arXiv:1812.11941 (2018).
 ```
 
-And we also tried the recently [method](http://yaksoy.github.io/highresdepth/) from CVPR2020, which also performs very well.
+And we also tried the recently [HighResDepth](http://yaksoy.github.io/highresdepth/) from CVPR2020, which also performs very well.
 ```
-Miangoleh, S. Mahdi H., et al. 
-"Boosting Monocular Depth Estimation Models to High-Resolution via Content-Adaptive Multi-Resolution Merging." 
+Miangoleh, S. Mahdi H., et al.
+"Boosting Monocular Depth Estimation Models to High-Resolution via Content-Adaptive Multi-Resolution Merging."
 Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition. 2021.
 ```
+
+### Architecture
+Actually the network architecture is very simple, just adding one ResNet50 feature extractor for Depth input and then merging the RGB and Depth feature maps.
+
+![The network for RGB+D DiMP50](imgs/figure_for_RGBD_DiMP50.png)
+![The network for RGB+D ATOM](imgs/figure_for_RGBD_ATOM.png)
+![The feature maps for RGB, D and the merged RGBD](imgs/fig_featuremaps.pdf)
 
 ### Download
 1) Download the training dataset(70 sequences) of VOT2021RGBD Challenge from Zenodo (DepthTrack RGBD Tracking Benchmark) and edit the path in local.py
