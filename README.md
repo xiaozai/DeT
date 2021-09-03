@@ -1,37 +1,49 @@
 # DeT
-Code for the ICCV2021 paper "DepthTrack: Unveiling the Power of RGBD Tracking"
+Code for out ICCV2021 paper "DepthTrack: Unveiling the Power of RGBD Tracking"
 
 The settings are same as that of Pytracking, please read the document of Pytracking for details.
 
-Dataset will be updated soon.
-
 ### Generated Depth
-We highly recommend to generate high quality depth data from the existing RGB tracking benchmarks, such as [LaSOT](http://vision.cs.stonybrook.edu/~lasot/), [Got10K](http://got-10k.aitestunion.com/), [TrackingNet](https://tracking-net.org/), and [COCO](https://cocodataset.org/#home).
+We highly recommend to generate high quality depth data from the existing RGB tracking benchmarks,
+such as [LaSOT](http://vision.cs.stonybrook.edu/~lasot/),
+[Got10K](http://got-10k.aitestunion.com/),
+[TrackingNet](https://tracking-net.org/), and
+[COCO](https://cocodataset.org/#home).
 
-![Examples of generated depth images, the first row is from HighResDepth for LaSOT RGB images, the second and the third are from DenseDepth for Got10K and COCO RGB images, the forth row is for the failure cases. The last row is from DenseDepth for CDTB RGB images.](imgs/generated_depth.png)
+We show the examples of generated depth here.
+The first row is the results from [HighResDepth](http://yaksoy.github.io/highresdepth/) for LaSOT RGB images,
+the second and the third are from [DenseDepth](https://github.com/ialhashim/DenseDepth) for Got10K and COCO RGB images,
+the forth row is for the failure cases in which the targets are too close to the background or floor.
+The last row is from DenseDepth for CDTB RGB images.
+
+![Examples of generated depth images](imgs/generated_depth.png)
 
 In our paper, we used the [DenseDepth](https://github.com/ialhashim/DenseDepth) monocular depth estimation method.
-We calculate the Ordinal Error (ORD) on the generated depth for CDTB and our DepthTrack test set, and the mean ORD is about 0.386, which is sufficient for training D or RGBD trackers.
+We calculate the Ordinal Error (ORD) on the generated depth for CDTB and our DepthTrack test set, and the mean ORD is about 0.386, which is sufficient for training D or RGBD trackers and we have tested it in our works.
 
 ```
-Alhashim, Ibraheem, and Peter Wonka.
-"High quality monocular depth estimation via transfer learning."
-arXiv preprint arXiv:1812.11941 (2018).
+Alhashim, Ibraheem, and Peter Wonka. "High quality monocular depth estimation via transfer learning." arXiv preprint arXiv:1812.11941 (2018).
 ```
 
 And we also tried the recently [HighResDepth](http://yaksoy.github.io/highresdepth/) from CVPR2020, which also performs very well.
 ```
-Miangoleh, S. Mahdi H., et al.
-"Boosting Monocular Depth Estimation Models to High-Resolution via Content-Adaptive Multi-Resolution Merging."
-Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition. 2021.
+Miangoleh, S. Mahdi H., et al. "Boosting Monocular Depth Estimation Models to High-Resolution via Content-Adaptive Multi-Resolution Merging." Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition. 2021.
 ```
+
+We will public the generated depth data soon.
+If you find some excellent methods to generate high quality depth images, please share it.
 
 ### Architecture
 Actually the network architecture is very simple, just adding one ResNet50 feature extractor for Depth input and then merging the RGB and Depth feature maps.
+Below figures are
+1) the feature maps for RGB, D inputs and the merged RGBD ones,
+2) the network for RGBD DiMP50,
+and 3) RGBD ATOM.
 
+![The feature maps for RGB, D and the merged RGBD](imgs/fig_featuremaps.png)
 ![The network for RGB+D DiMP50](imgs/figure_for_RGBD_DiMP50.png)
 ![The network for RGB+D ATOM](imgs/figure_for_RGBD_ATOM.png)
-![The feature maps for RGB, D and the merged RGBD](imgs/fig_featuremaps.png)
+
 
 ### Download
 1) Download the training dataset(70 sequences) of VOT2021RGBD Challenge from Zenodo (DepthTrack RGBD Tracking Benchmark) and edit the path in local.py
