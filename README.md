@@ -21,13 +21,23 @@ The last row is from DenseDepth for CDTB RGB images.
 In our paper, we used the [DenseDepth](https://github.com/ialhashim/DenseDepth) monocular depth estimation method.
 We calculate the Ordinal Error (ORD) on the generated depth for CDTB and our DepthTrack test set, and the mean ORD is about 0.386, which is sufficient for training D or RGBD trackers and we have tested it in our works.
 
-```
-Alhashim, Ibraheem, and Peter Wonka. "High quality monocular depth estimation via transfer learning." arXiv preprint arXiv:1812.11941 (2018).
-```
+And we also tried the recently [HighResDepth](http://yaksoy.github.io/highresdepth/) from CVPR2021, which also performs very well.
 
-And we also tried the recently [HighResDepth](http://yaksoy.github.io/highresdepth/) from CVPR2020, which also performs very well.
 ```
-Miangoleh, S. Mahdi H., et al. "Boosting Monocular Depth Estimation Models to High-Resolution via Content-Adaptive Multi-Resolution Merging." Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition. 2021.
+@article{alhashim2018high,
+  title={High quality monocular depth estimation via transfer learning},
+  author={Alhashim, Ibraheem and Wonka, Peter},
+  journal={arXiv preprint arXiv:1812.11941},
+  year={2018}
+}
+
+@inproceedings{miangoleh2021boosting,
+  title={Boosting Monocular Depth Estimation Models to High-Resolution via Content-Adaptive Multi-Resolution Merging},
+  author={Miangoleh, S Mahdi H and Dille, Sebastian and Mai, Long and Paris, Sylvain and Aksoy, Yagiz},
+  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
+  pages={9685--9694},
+  year={2021}
+}
 ```
 
 We will public the generated depth data soon.
@@ -37,8 +47,8 @@ If you find some excellent methods to generate high quality depth images, please
 Actually the network architecture is very simple, just adding one ResNet50 feature extractor for Depth input and then merging the RGB and Depth feature maps.
 Below figures are
 1) the feature maps for RGB, D inputs and the merged RGBD ones,
-2) the network for RGBD DiMP50,
-and 3) RGBD ATOM.
+2) the network for RGBD DiMP50, and
+3) RGBD ATOM.
 
 ![The feature maps for RGB, D and the merged RGBD](imgs/fig_featuremaps.png)
 ![The network for RGB+D DiMP50](imgs/figure_for_RGBD_DiMP50.png)
