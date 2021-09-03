@@ -5,11 +5,11 @@ def local_env_settings():
 
     # Set your local paths here.
 
-    settings.cdtb_path = '/home/sgn/Data1/yan/Datasets/CDTB/'
-    settings.cdtb_st_path = '/home/sgn/Data1/yan/Datasets/CDTB-ST'
+    settings.cdtb_path = '/home/yan/Data2/DOT-results/CDTB/sequences/'
+    settings.cdtb_st_path = '/home/yan/Data2/DOT-results/CDTB-ST/sequences/'
     settings.davis_dir = ''
-    settings.depthtrack_path = '/home/sgn/Data1/yan/Datasets/DepthTrack-v1/sequences/'
-    settings.depthtrack_st_path = '/home/sgn/Data1/yan/Datasets/DepthTrack-ST/sequences/'
+    settings.depthtrack_path = '/home/yan/Data3/Datasets/DepthTrack-v1/test/'
+    settings.depthtrack_st_path = '/home/yan/Data2/DOT-results/DepthTrack-ST/sequences/'
     settings.got10k_path = ''
     settings.got_packed_results_path = ''
     settings.got_reports_path = ''

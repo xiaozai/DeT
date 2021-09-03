@@ -22,11 +22,7 @@ class CDTBD_STDataset(BaseDataset):
 
         if self.dtype == 'color':
             ext = 'jpg'
-<<<<<<< HEAD
-        elif self.dtype == 'rgbd':
-=======
         elif self.dtype in ['rgbd', 'rgbcolormap', 'rgb3d']:
->>>>>>> 1d9f848da34bd86ab3f2b68b47bd7589d1fcc92c
             ext = ['jpg', 'png'] # Song not implemented yet
         else:
             ext = 'png'
@@ -46,11 +42,7 @@ class CDTBD_STDataset(BaseDataset):
         else:
             group = self.dtype
 
-<<<<<<< HEAD
-        if self.dtype in ['rgbd', 'rgbcolormap']:
-=======
         if self.dtype in ['rgbd', 'rgbcolormap', 'rgb3d']:
->>>>>>> 1d9f848da34bd86ab3f2b68b47bd7589d1fcc92c
             frames = [{'color': '{base_path}/{sequence_path}/color/{frame:0{nz}}.jpg'.format(base_path=self.base_path,sequence_path=sequence_path, frame=frame_num, nz=nz),
                        'depth': '{base_path}/{sequence_path}/depth/{frame:0{nz}}.png'.format(base_path=self.base_path,sequence_path=sequence_path, frame=frame_num, nz=nz)
                        }for frame_num in range(start_frame, end_frame+1)]
@@ -72,28 +64,19 @@ class CDTBD_STDataset(BaseDataset):
 
             ground_truth_rect = np.concatenate((x1, y1, x2-x1, y2-y1), 1)
 
-<<<<<<< HEAD
-        return Sequence(sequence_name, frames, 'cdtb', ground_truth_rect, dtype=self.dtype)
-=======
         return Sequence(sequence_name, frames, 'cdtb_st', ground_truth_rect, dtype=self.dtype)
->>>>>>> 1d9f848da34bd86ab3f2b68b47bd7589d1fcc92c
 
     def __len__(self):
         return len(self.sequence_list)
 
     def _get_sequence_list(self):
-<<<<<<< HEAD
 
-        with open(os.path.join(self.base_path, 'list.txt'), 'r') as fp:
-            sequence_list = fp.readlines()
-        sequence_list = [seq.strip() for seq in sequence_list]
-=======
         sequence_list = os.listdir(self.base_path)
         try:
             sequence_list.remove('list.txt')
         except:
             pass
->>>>>>> 1d9f848da34bd86ab3f2b68b47bd7589d1fcc92c
+
         # sequence_list= ['backpack_blue',
         #                 'backpack_robotarm_lab_occ',
         #                 'backpack_room_noocc_1',

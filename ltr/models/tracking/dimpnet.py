@@ -10,6 +10,7 @@ import ltr.models.target_classifier.optimizer as clf_optimizer
 import ltr.models.bbreg as bbmodels
 import ltr.models.backbone as backbones
 from ltr import model_constructor
+import numpy as np
 
 class DiMPnet_DeT(nn.Module):
     """The DiMP network.
@@ -36,6 +37,8 @@ class DiMPnet_DeT(nn.Module):
         if self.merge_type == 'conv':
             self.merge_layer2 = nn.Conv2d(1024, 512, (1,1))
             self.merge_layer3 = nn.Conv2d(2048, 1024, (1,1))
+
+        self.id = 1
 
     def forward(self, train_imgs, test_imgs, train_bb, test_proposals, *args, **kwargs):
         """Runs the DiMP network the way it is applied during training.
@@ -114,6 +117,8 @@ class DiMPnet_DeT(nn.Module):
         return feat
 
     def extract_backbone_features(self, im, layers=None):
+
+        print('In dimpnet.py  extract_backbone_features...')
         if layers is None:
             layers = self.output_layers
 
@@ -121,7 +126,38 @@ class DiMPnet_DeT(nn.Module):
         if dims[1] == 6:
             color_feat = self.feature_extractor(im[:, :3, :, :], layers)
             depth_feat = self.feature_extractor_depth(im[:, 3:, :, :], layers)
-            return self.merge(color_feat, depth_feat)
+
+            for x in color_feat:
+                print(x)
+
+
+            merged_feat = self.merge(color_feat, depth_feat)
+
+
+            output_path = '/home/yan/Data2/DeT-DiMP50-Max-featuremaps/CDTB-ST/'
+            color_layer2 = color_feat['layer2']
+            color_layer3 = color_feat['layer3']
+            depth_layer2 = depth_feat['layer2']
+            depth_layer3 = depth_feat['layer3']
+            merged_layer2 = merged_feat['layer2']
+            merged_layer3 = merged_feat['layer3']
+
+            out_color = im[:, :3, :, :]
+            out_depth = im[:, 3:, :, :]
+
+            print(self.id)
+            np.save(output_path+'color_%d.npy'%self.id, out_color.detach().cpu().numpy().squeeze())
+            np.save(output_path+'depth_%d.npy'%self.id, out_depth.detach().cpu().numpy().squeeze())
+
+            np.save(output_path+'color_layer2_%d.npy'%self.id, color_layer2.detach().cpu().numpy().squeeze())
+            np.save(output_path+'color_layer3_%d.npy'%self.id, color_layer3.detach().cpu().numpy().squeeze())
+            np.save(output_path+'depth_layer2_%d.npy'%self.id, depth_layer2.detach().cpu().numpy().squeeze())
+            np.save(output_path+'depth_layer3_%d.npy'%self.id, depth_layer3.detach().cpu().numpy().squeeze())
+            np.save(output_path+'merged_layer2_%d.npy'%self.id, merged_layer2.detach().cpu().numpy().squeeze())
+            np.save(output_path+'merged_layer3_%d.npy'%self.id, merged_layer3.detach().cpu().numpy().squeeze())
+
+            self.id += 1
+            return merged_feat
         else:
             return self.feature_extractor(im, layers)
 
