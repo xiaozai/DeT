@@ -47,7 +47,7 @@ We manually remove bad sequences, and here are totally 646 sequences used the De
 [part01](https://doi.org/10.5281/zenodo.5482985),
 [part02](https://doi.org/10.5281/zenodo.5484168), 
 [part03](https://doi.org/10.5281/zenodo.5493447),
-[part04](),
+<!-- [part04](),
 [part05](),
 [part06](),
 [part07](),
@@ -59,7 +59,7 @@ We manually remove bad sequences, and here are totally 646 sequences used the De
 [part13](),
 [part14](),
 [part15](),
-[part16]()
+[part16]() -->
 
 If you find some excellent methods to generate high quality depth images, please share it.
 
