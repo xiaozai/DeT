@@ -42,24 +42,23 @@ And we also tried the recently [HighResDepth](http://yaksoy.github.io/highresdep
 
 We will public the generated depth maps one by one.
 ## Generated Depth maps for LaSOT
-We manually remove bad sequences, and here are totally 646 sequences used the DenseDepth method.
+We manually remove bad sequences, and here are totally 646 sequences used the **DenseDepth** method. 
+Original DenseDepth outputs are in range [0, 1.0], we multiply 2^16.
+Please check [LaSOT](http://vision.cs.stonybrook.edu/~lasot/) for RGB images and groundtruth.
 
 [part01](https://doi.org/10.5281/zenodo.5482985),
 [part02](https://doi.org/10.5281/zenodo.5484168), 
 [part03](https://doi.org/10.5281/zenodo.5493447),
-<!-- [part04](),
-[part05](),
-[part06](),
-[part07](),
-[part08](),
-[part09](),
-[part10](),
-[part11](),
-[part12](),
-[part13](),
-[part14](),
-[part15](),
-[part16]() -->
+[part04](https://doi.org/10.5281/zenodo.5493615),
+[part05](https://doi.org/10.5281/zenodo.5494482),
+[part06](https://doi.org/10.5281/zenodo.5494485),
+[part07](https://doi.org/10.5281/zenodo.5495242),
+[part08](https://doi.org/10.5281/zenodo.5495246),
+[part09](https://doi.org/10.5281/zenodo.5495249),
+[part10](https://doi.org/10.5281/zenodo.5495255)
+
+
+The generated depth maps by using **HighResDepth** will be uploaded soon.
 
 If you find some excellent methods to generate high quality depth images, please share it.
 
