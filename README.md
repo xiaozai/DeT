@@ -40,7 +40,27 @@ And we also tried the recently [HighResDepth](http://yaksoy.github.io/highresdep
 }
 ```
 
-We will public the generated depth data soon.
+We will public the generated depth maps one by one.
+## Generated Depth maps for LaSOT
+We manually remove bad sequences, and here are totally 646 sequences used the DenseDepth method.
+
+[part01](https://doi.org/10.5281/zenodo.5482985),
+[part02](https://doi.org/10.5281/zenodo.5484168), 
+[part03](https://doi.org/10.5281/zenodo.5493447),
+[part04](),
+[part05](),
+[part06](),
+[part07](),
+[part08](),
+[part09](),
+[part10](),
+[part11](),
+[part12](),
+[part13](),
+[part14](),
+[part15](),
+[part16]()
+
 If you find some excellent methods to generate high quality depth images, please share it.
 
 ### Architecture
