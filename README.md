@@ -42,7 +42,7 @@ And we also tried the recently [HighResDepth](http://yaksoy.github.io/highresdep
 
 We will public the generated depth maps one by one.
 ## Generated Depth maps for LaSOT
-We manually remove bad sequences, and here are totally 646 sequences used the **DenseDepth** method. 
+We manually remove bad sequences, and here are totally 646 sequences (some zip files may be broken, will be updated soon) used the **DenseDepth** method. 
 Original DenseDepth outputs are in range [0, 1.0], we multiply 2^16.
 Please check [LaSOT](http://vision.cs.stonybrook.edu/~lasot/) for RGB images and groundtruth.
 
