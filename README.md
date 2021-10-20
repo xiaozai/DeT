@@ -1,5 +1,27 @@
-# DeT
-Code for out ICCV2021 paper "DepthTrack: Unveiling the Power of RGBD Tracking"
+# DeT and DOT
+Code and datasets for 
+
+1) "DepthTrack: Unveiling the Power of RGBD Tracking" (ICCV2021)
+2) "Depth-only Object Tracking" (BMVC2021)
+
+```
+@InProceedings{yan2021det,
+    author    = {Yan, Song and Yang, Jinyu and Kapyla, Jani and Zheng, Feng and Leonardis, Ales and Kamarainen, Joni-Kristian},
+    title     = {DepthTrack: Unveiling the Power of RGBD Tracking},
+    booktitle = {Proceedings of the IEEE/CVF International Conference on Computer Vision (ICCV)},
+    month     = {October},
+    year      = {2021},
+    pages     = {10725-10733}
+}
+
+@InProceedings{yan2021dot,
+  title       = {Depth-only Object Tracking},
+  author      = {Yan, Song and Yang, Jinyu and Leonardis, Ales and Kamarainen, Joni-Kristian},
+  booktitle   = {Procedings of the British Machine Vision Conference (BMVC)},
+  year        = {2021},
+  organization= {British Machine Vision Association}
+}
+```
 
 The settings are same as that of Pytracking, please read the document of Pytracking for details.
 
