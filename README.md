@@ -23,9 +23,36 @@ Code and datasets for
 }
 ```
 
-The settings are same as that of Pytracking, please read the document of Pytracking for details.
 
-### Generated Depth
+### DepthTrack Test set (50 Sequences) 
+[Download](https://doi.org/10.5281/zenodo.5792146)
+
+### DepthTrack Training set (150 Sequences)
+Uploading ... (Monday)
+
+### Generated LaSOT Depth Images
+We manually remove bad sequences, and here are totally 646 sequences (some zip files may be broken, will be updated soon) used the **DenseDepth** method. 
+Original DenseDepth outputs are in range [0, 1.0], we multiply 2^16.
+Please check [LaSOT](http://vision.cs.stonybrook.edu/~lasot/) for RGB images and groundtruth.
+
+[part01](https://doi.org/10.5281/zenodo.5482985),
+[part02](https://doi.org/10.5281/zenodo.5484168), 
+[part03](https://doi.org/10.5281/zenodo.5493447),
+[part04](https://doi.org/10.5281/zenodo.5493615),
+[part05](https://doi.org/10.5281/zenodo.5494482),
+[part06](https://doi.org/10.5281/zenodo.5494485),
+[part07](https://doi.org/10.5281/zenodo.5495242),
+[part08](https://doi.org/10.5281/zenodo.5495246),
+[part09](https://doi.org/10.5281/zenodo.5495249),
+[part10](https://doi.org/10.5281/zenodo.5495255)
+
+### Generated Got10K Depth Images
+Uploading ... (Monday)
+
+### Generated COCO Depth Images
+Uploading .... (Monday)
+
+## How to generate the depth maps for RGB benchmarks
 We highly recommend to generate high quality depth data from the existing RGB tracking benchmarks,
 such as [LaSOT](http://vision.cs.stonybrook.edu/~lasot/),
 [Got10K](http://got-10k.aitestunion.com/),
@@ -62,29 +89,14 @@ And we also tried the recently [HighResDepth](http://yaksoy.github.io/highresdep
 }
 ```
 
-We will public the generated depth maps one by one.
-## Generated Depth maps for LaSOT
-We manually remove bad sequences, and here are totally 646 sequences (some zip files may be broken, will be updated soon) used the **DenseDepth** method. 
-Original DenseDepth outputs are in range [0, 1.0], we multiply 2^16.
-Please check [LaSOT](http://vision.cs.stonybrook.edu/~lasot/) for RGB images and groundtruth.
-
-[part01](https://doi.org/10.5281/zenodo.5482985),
-[part02](https://doi.org/10.5281/zenodo.5484168), 
-[part03](https://doi.org/10.5281/zenodo.5493447),
-[part04](https://doi.org/10.5281/zenodo.5493615),
-[part05](https://doi.org/10.5281/zenodo.5494482),
-[part06](https://doi.org/10.5281/zenodo.5494485),
-[part07](https://doi.org/10.5281/zenodo.5495242),
-[part08](https://doi.org/10.5281/zenodo.5495246),
-[part09](https://doi.org/10.5281/zenodo.5495249),
-[part10](https://doi.org/10.5281/zenodo.5495255)
-
 
 The generated depth maps by using **HighResDepth** will be uploaded soon.
 
 If you find some excellent methods to generate high quality depth images, please share it.
 
 ### Architecture
+The settings are same as that of Pytracking, please read the document of Pytracking for details.
+
 Actually the network architecture is very simple, just adding one ResNet50 feature extractor for Depth input and then merging the RGB and Depth feature maps.
 Below figures are
 1) the feature maps for RGB, D inputs and the merged RGBD ones,
