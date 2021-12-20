@@ -27,8 +27,10 @@ Code and datasets for
 ### DepthTrack Test set (50 Sequences) 
 [Download](https://doi.org/10.5281/zenodo.5792146)
 
-### DepthTrack Training set (150 Sequences)
-Uploading ... (Monday)
+### DepthTrack Training set (151 Sequences)
+[Download (100 seqs)](https://doi.org/10.5281/zenodo.5794115),  [Download (51 seqs)](https://doi.org/10.5281/zenodo.5794125)
+
+All videoes are 640x360, except 4 sequences in 640x320: painting_indoor_320, pine02_wild_320, toy07_indoor_320, hat02_indoor_320
 
 ### Generated LaSOT Depth Images
 We manually remove bad sequences, and here are totally 646 sequences (some zip files may be broken, will be updated soon) used the **DenseDepth** method. 
@@ -47,10 +49,10 @@ Please check [LaSOT](http://vision.cs.stonybrook.edu/~lasot/) for RGB images and
 [part10](https://doi.org/10.5281/zenodo.5495255)
 
 ### Generated Got10K Depth Images
-Uploading ... (Monday)
+Uploading ... (Tuesday)
 
 ### Generated COCO Depth Images
-Uploading .... (Monday)
+Uploading .... (Tuesday)
 
 ## How to generate the depth maps for RGB benchmarks
 We highly recommend to generate high quality depth data from the existing RGB tracking benchmarks,
