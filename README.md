@@ -37,22 +37,31 @@ We manually remove bad sequences, and here are totally 646 sequences (some zip f
 Original DenseDepth outputs are in range [0, 1.0], we multiply 2^16.
 Please check [LaSOT](http://vision.cs.stonybrook.edu/~lasot/) for RGB images and groundtruth.
 
-[part01](https://doi.org/10.5281/zenodo.5482985),
-[part02](https://doi.org/10.5281/zenodo.5484168), 
-[part03](https://doi.org/10.5281/zenodo.5493447),
-[part04](https://doi.org/10.5281/zenodo.5493615),
-[part05](https://doi.org/10.5281/zenodo.5494482),
-[part06](https://doi.org/10.5281/zenodo.5494485),
-[part07](https://doi.org/10.5281/zenodo.5495242),
-[part08](https://doi.org/10.5281/zenodo.5495246),
-[part09](https://doi.org/10.5281/zenodo.5495249),
-[part10](https://doi.org/10.5281/zenodo.5495255)
+[Download (part01)](https://doi.org/10.5281/zenodo.5482985),
+[Download (part02)](https://doi.org/10.5281/zenodo.5484168), 
+[Download (part03)](https://doi.org/10.5281/zenodo.5493447),
+[Download (part04)](https://doi.org/10.5281/zenodo.5493615),
+[Download (part05)](https://doi.org/10.5281/zenodo.5494482),
+
+
+[Download (part06)](https://doi.org/10.5281/zenodo.5494485),
+[Download (part07)](https://doi.org/10.5281/zenodo.5495242),
+[Download (part08)](https://doi.org/10.5281/zenodo.5495246),
+[Download (part09)](https://doi.org/10.5281/zenodo.5495249),
+[Download (part10)](https://doi.org/10.5281/zenodo.5495255)
 
 ### Generated Got10K Depth Images
-Uploading ... (Tuesday)
+[Download (0001 - 0700)](https://doi.org/10.5281/zenodo.5795586), 
+[Download (0701 - 1500)](https://doi.org/10.5281/zenodo.5795675), 
+[Download (1501 - 2100)](https://doi.org/10.5281/zenodo.5795574),
+[Download (2101 - 2600)](https://doi.org/10.5281/zenodo.5795980),
+[Downlaod (2601 - 3300)](),
+
+
+[Uploading more....]()
 
 ### Generated COCO Depth Images
-Uploading .... (Tuesday)
+[Download](https://doi.org/10.5281/zenodo.5795270)
 
 ## How to generate the depth maps for RGB benchmarks
 We highly recommend to generate high quality depth data from the existing RGB tracking benchmarks,
