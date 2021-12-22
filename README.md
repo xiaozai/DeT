@@ -51,10 +51,12 @@ Please check [LaSOT](http://vision.cs.stonybrook.edu/~lasot/) for RGB images and
 [Download (part10)](https://doi.org/10.5281/zenodo.5495255)
 
 ### Generated Got10K Depth Images
-[Download (0001 - 0700)](https://doi.org/10.5281/zenodo.5795586), 
-[Download (0701 - 1500)](https://doi.org/10.5281/zenodo.5795675), 
-[Download (1501 - 2100)](https://doi.org/10.5281/zenodo.5795574),
-[Download (2101 - 2600)](https://doi.org/10.5281/zenodo.5795980),
+uploading the merged files, wait a sec ....
+
+[Download (0001 - 0700)](), 
+[Download (0701 - 1500)](), 
+[Download (1501 - 2100)](),
+[Download (2101 - 2600)](),
 [Downlaod (2601 - 3300)](),
 
 
