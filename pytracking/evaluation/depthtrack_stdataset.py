@@ -1,6 +1,6 @@
 import numpy as np
 from pytracking.evaluation.data import Sequence, BaseDataset, SequenceList
-import os 
+import os
 
 class DepthTrack_ST_Dataset(BaseDataset):
     """
@@ -82,55 +82,5 @@ class DepthTrack_ST_Dataset(BaseDataset):
             sequence_list.remove('list.txt')
         except:
             pass
-        # sequence_list= ['adapter01_indoor',
-        #                 'backpack_indoor',
-        #                 'bag01_indoor',
-        #                 'bag02_indoor',
-        #                 'ball01_wild',
-        #                 'ball06_indoor',
-        #                 'ball10_wild',
-        #                 'ball11_wild',
-        #                 'ball15_wild',
-        #                 'ball18_indoor',
-        #                 'ball20_indoor',
-        #                 'bandlight_indoor',
-        #                 'beautifullight02_indoor',
-        #                 'book03_indoor',
-        #                 'bottle04_indoor',
-        #                 'card_indoor',
-        #                 'cat01_indoor',
-        #                 'colacan03_indoor',
-        #                 'cube02_indoor',
-        #                 'cube03_indoor',
-        #                 'cube05_indoor',
-        #                 'cup01_indoor',
-        #                 'cup02_indoor',
-        #                 'cup04_indoor',
-        #                 'cup12_indoor',
-        #                 'developmentboard_indoor',
-        #                 'duck03_wild',
-        #                 'dumbbells01_indoor',
-        #                 'earphone01_indoor',
-        #                 'file01_indoor',
-        #                 'flag_indoor',
-        #                 'glass01_indoor',
-        #                 'hand01_indoor',
-        #                 'human02_indoor',
-        #                 'lock_wild',
-        #                 'mobilephone03_indoor',
-        #                 'notebook01_indoor',
-        #                 'pigeon01_wild',
-        #                 'pigeon02_wild',
-        #                 'pigeon04_wild',
-        #                 'pot_indoor',
-        #                 'roller_indoor',
-        #                 'shoes02_indoor',
-        #                 'squirrel_wild',
-        #                 'stick_indoor',
-        #                 'toiletpaper01_indoor',
-        #                 'toy02_indoor',
-        #                 'toy09_indoor',
-        #                 'ukulele01_indoor',
-        #                 'yogurt_indoor']
 
         return sequence_list

@@ -14,18 +14,7 @@ import cv2
 from ltr.dataset.depth_utils import get_target_depth, get_layered_image_by_depth
 
 class DepthTrack(BaseVideoDataset):
-    """ LaSOT dataset.
-
-    Publication:
-        LaSOT: A High-quality Benchmark for Large-scale Single Object Tracking
-        Heng Fan, Liting Lin, Fan Yang, Peng Chu, Ge Deng, Sijia Yu, Hexin Bai, Yong Xu, Chunyuan Liao and Haibin Ling
-        CVPR, 2019
-        https://arxiv.org/pdf/1809.07845.pdf
-
-    Download the dataset from https://cis.temple.edu/lasot/download.html
-
-    !!!!! Song : estimated the depth images from LaSOT dataset, there are 646 sequences with corresponding depth !!!!!
-
+    """ DepthTrack dataset.
     """
 
     def __init__(self, root=None, dtype='colormap', split='train',  image_loader=jpeg4py_loader, vid_ids=None): #  split=None, data_fraction=None):
@@ -223,7 +212,7 @@ class DepthTrack(BaseVideoDataset):
             dp = np.asarray(dp, dtype=np.uint8)
             dp = cv2.merge((dp, dp, dp))
             img = cv2.merge((rgb, dp))
-            
+
         else:
             print('no such dtype ... : %s'%self.dtype)
             img = None

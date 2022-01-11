@@ -111,7 +111,7 @@ class DepthTrackDataset(BaseDataset):
                         'glass01_indoor',
                         'hand01_indoor',
                         'human02_indoor',
-                        'lock_wild',
+                        'lock02_indoor',
                         'mobilephone03_indoor',
                         'notebook01_indoor',
                         'pigeon01_wild',
