@@ -10,6 +10,7 @@ from ltr.data.image_loader import jpeg4py_loader
 from .base_video_dataset import BaseVideoDataset
 from ltr.admin.environment import env_settings
 
+from ltr.dataset.depth_utils import get_frame
 
 def list_sequences(root, set_ids):
     """ Lists all the videos in the input set_ids. Returns a list of tuples (set_id, video_name)
@@ -121,27 +122,12 @@ class TrackingNet_depth(BaseVideoDataset):
     def _get_frame(self, seq_id, frame_id):
         set_id = self.sequence_list[seq_id][0]
         vid_name = self.sequence_list[seq_id][1]
-        # frame_path = os.path.join(self.root, "TRAIN_" + str(set_id), "frames", vid_name, str(frame_id) + ".jpg")
-        frame_path = os.path.join(self.root, "TRAIN_" + str(set_id), "depth", vid_name, str(frame_id) + ".png")
-        # print('Song in Tracking_net dataset, frame_path = : ', frame_path)
+        color_path = os.path.join(self.root, "TRAIN_" + str(set_id), "frames", vid_name, str(frame_id) + ".jpg")
+        depth_path = os.path.join(self.root, "TRAIN_" + str(set_id), "depth", vid_name, str(frame_id) + ".png")
 
-        dp = cv2.imread(frame_path, -1)
-        dp = cv2.normalize(dp, None, alpha=0, beta=255, norm_type=cv2.NORM_MINMAX)
-        dp = np.asarray(dp, dtype=np.uint8)
-
-        if self.dtype == 'colormap':
-            img = cv2.applyColorMap(dp, cv2.COLORMAP_JET)
-        elif self.dtype == 'colormap_depth':
-            '''
-            Colormap + depth
-            '''
-            colormap = cv2.applyColorMap(dp, cv2.COLORMAP_JET)
-            r, g, b = cv2.split(colormap)
-            img = cv2.merge((r, g, b, dp))
-        else:
-            img = cv2.merge((dp, dp, dp)) # H * W * 3
+        img = get_frame(color_path, depth_path, dtype=self.dtype, depth_clip=True)
+        
         return img
-        # return self.image_loader(frame_path)
 
     def _get_class(self, seq_id):
         seq_name = self.sequence_list[seq_id][1]

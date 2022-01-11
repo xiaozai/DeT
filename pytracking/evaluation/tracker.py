@@ -15,7 +15,7 @@ from pytracking.evaluation.multi_object_wrapper import MultiObjectWrapper
 from pathlib import Path
 import torch
 
-from ltr.dataset.depth_utils import get_target_depth, get_layered_image_by_depth
+from ltr.dataset.depth_utils import get_frame
 
 import numpy as np
 import math
@@ -181,12 +181,12 @@ class Tracker:
                     output[key].append(val)
 
         # Initialize
-        if seq.dtype in ['centered_colormap', 'centered_raw_depth', 'centered_normalized_depth']:
-            bbox = init_info.get('init_bbox')
-        else:
-            bbox = None
+        # if seq.dtype in ['centered_colormap', 'centered_raw_depth', 'centered_normalized_depth']:
+        #     bbox = init_info.get('init_bbox')
+        # else:
+            # bbox = None
 
-        image = self._read_image(seq.frames[0], dtype=seq.dtype, bbox=bbox)
+        image = self._read_image(seq.frames[0], dtype=seq.dtype)
 
         if tracker.params.visualization and self.visdom is None:
             self.visualize(image, init_info.get('init_bbox'))
@@ -218,12 +218,12 @@ class Tracker:
                 else:
                     time.sleep(0.1)
 
-            if seq.dtype in ['centered_raw_depth', 'centered_colormap', 'centered_normalized_depth']:
-                bbox = prev_output['target_bbox']
-            else:
-                bbox = None
+            # if seq.dtype in ['centered_raw_depth', 'centered_colormap', 'centered_normalized_depth']:
+            #     bbox = prev_output['target_bbox']
+            # else:
+            #     bbox = None
 
-            image = self._read_image(frame_path, dtype=seq.dtype, bbox=bbox)
+            image = self._read_image(frame_path, dtype=seq.dtype)
 
             start_time = time.time()
 
@@ -736,64 +736,12 @@ class Tracker:
             self.reset_tracker()
             print("Resetting target pos to gt!")
 
-    def _read_image(self, image_file: str, dtype='colormap', bbox=None):
-
-        if dtype == 'color':
-            im = cv.imread(image_file)
-            return cv.cvtColor(im, cv.COLOR_BGR2RGB)
-
-        elif dtype == 'rgbcolormap':
-
-            color_image = cv.imread(image_file['color'])
-            color = cv.cvtColor(color_image, cv.COLOR_BGR2RGB)
-            depth_image = cv.imread(image_file['depth'], -1)
-
-            max_depth = min(np.median(depth_image) * 3, 10000) # 10 meter, in the most frames in CDTB and DepthTrack , the depth of target is smaller than 10 m
-            depth_image[depth_image>max_depth] = max_depth
-
-            depth_image = cv.normalize(depth_image, None, alpha=0, beta=255, norm_type=cv.NORM_MINMAX, dtype=cv.CV_32F)
-            depth_image = np.asarray(depth_image, dtype=np.uint8)
-            depth_image = cv.applyColorMap(depth_image, cv.COLORMAP_JET)
-            img = cv.merge((color_image, depth_image))
-
-        elif dtype == 'rgb3d':
-            color_image = cv.imread(image_file['color'])
-            color = cv.cvtColor(color_image, cv.COLOR_BGR2RGB)
-            depth_image = cv.imread(image_file['depth'], -1)
-
-            max_depth = min(np.median(depth_image) * 3, 10000) # 10 meter, in the most frames in CDTB and DepthTrack , the depth of target is smaller than 10 m
-            depth_image[depth_image>max_depth] = max_depth
-
-            depth_image = cv.normalize(depth_image, None, alpha=0, beta=255, norm_type=cv.NORM_MINMAX, dtype=cv.CV_32F)
-            depth_image = np.asarray(depth_image, dtype=np.uint8)
-            # depth_image = cv.applyColorMap(depth_image, cv.COLORMAP_JET)
-            depth_image = cv.merge((depth_image, depth_image, depth_image))
-            img = cv.merge((color_image, depth_image))
-
-        elif dtype in ['colormap', 'normalized_depth', 'raw_depth', 'centered_colormap', 'centered_normalized_depth', 'centered_raw_depth']:
-            depth_image_file = image_file
-            dp = cv.imread(depth_image_file, -1)
-
-            if dtype == 'colormap':
-                img = cv.normalize(dp, None, alpha=0, beta=255, norm_type=cv.NORM_MINMAX, dtype=cv.CV_32F)
-                img = np.asarray(img, dtype=np.uint8)
-                img = cv.applyColorMap(img, cv.COLORMAP_JET)
-            elif dtype == 'normalized_depth':
-                img = cv.normalize(dp, None, alpha=0, beta=255, norm_type=cv.NORM_MINMAX, dtype=cv.CV_32F)
-                img = np.asarray(img, dtype=np.uint8)
-                img = cv.merge((img, img, img))
-            elif dtype == 'raw_depth':
-                img = np.asarray(img)
-                img = np.stack((img, img, img), axis=2)
-            elif dtype in ['centered_colormap', 'centered_normalized_depth', 'centered_raw_depth']:
-                if bbox is None:
-                    print('centered colormap requires BBox !!!')
-                    return None
-
-                target_depth = get_target_depth(dp, bbox)
-                img = get_layered_image_by_depth(dp, target_depth, dtype=dtype)
+    def _read_image(self, image_file: str, dtype='color'):
+        if isinstance(image_file, dict):
+            img = get_frame(image_file['color'], image_file['depth'], dtype=dtype, depth_clip=True)
+        else:
+            if dtype == 'color':
+                img = get_frame(image_file, None, dtype=dtype, depth_clip=False)
             else:
-                print('No such dtype !!! ')
-                img = None
-
+                img = get_frame(None, image_file, dtype=dtype, depth_clip=False)
         return img

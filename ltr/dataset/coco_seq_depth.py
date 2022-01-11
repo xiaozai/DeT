@@ -8,7 +8,7 @@ from collections import OrderedDict
 from ltr.admin.environment import env_settings
 import numpy as np
 import cv2
-from ltr.dataset.depth_utils import get_target_depth, get_layered_image_by_depth
+from ltr.dataset.depth_utils import get_frame
 
 class MSCOCOSeq_depth(BaseVideoDataset):
     """ The COCO dataset. COCO is an image dataset. Thus, we treat each image as a sequence of length 1.
@@ -130,61 +130,13 @@ class MSCOCOSeq_depth(BaseVideoDataset):
 
     def _get_frames(self, seq_id, depth_threshold=None, bbox=None):
 
-        rgb_path = self.coco_set.loadImgs([self.coco_set.anns[self.sequence_list[seq_id]]['image_id']])[0]['file_name']
-
+        color_path = self.coco_set.loadImgs([self.coco_set.anns[self.sequence_list[seq_id]]['image_id']])[0]['file_name']
         depth_path = rgb_path[:-4] + '.png'
 
-        rgb = cv2.imread(os.path.join(self.img_pth, 'color', rgb_path))
-        rgb = cv2.cvtColor(rgb, cv2.COLOR_BGR2RGB)
+        color_path = os.path.join(self.img_path, 'color', color_path)
+        depth_path = os.path.join(self.img_path, 'depth', depth_path)
 
-        dp = cv2.imread(os.path.join(self.img_pth, 'depth', depth_path), -1)
-
-        max_depth = min(np.max(dp), 10000)
-        dp[dp > max_depth] = max_depth
-
-        if self.dtype == 'centered_colormap':
-            if bbox is None:
-                print('Error !!!  centered_colormap requires BBox ')
-                return
-            # bbox is repeated
-            target_depth = get_target_depth(dp, bbox[0])
-            img = get_layered_image_by_depth(dp, target_depth, dtype=self.dtype)
-
-        elif self.dtype == 'colormap':
-            dp = cv2.normalize(dp, None, alpha=0, beta=255, norm_type=cv2.NORM_MINMAX)
-            dp = np.asarray(dp, dtype=np.uint8)
-            img = cv2.applyColorMap(dp, cv2.COLORMAP_JET)
-
-        elif self.dtype == 'colormap_depth':
-            '''
-            Colormap + depth
-            '''
-            dp = cv2.normalize(dp, None, alpha=0, beta=255, norm_type=cv2.NORM_MINMAX)
-            dp = np.asarray(dp, dtype=np.uint8)
-            colormap = cv2.applyColorMap(dp, cv2.COLORMAP_JET)
-            r, g, b = cv2.split(colormap)
-            img = cv2.merge((r, g, b, dp))
-
-        elif self.dtype == 'depth_gray':
-            dp = cv2.normalize(dp, None, alpha=0, beta=255, norm_type=cv2.NORM_MINMAX)
-            dp = np.asarray(dp, dtype=np.uint8)
-            img = cv2.merge((dp, dp, dp)) # H * W * 3
-
-        elif self.dtype == 'color':
-            img = rgb
-
-        elif self.dtype == 'rgbcolormap':
-            dp = cv2.normalize(dp, None, alpha=0, beta=255, norm_type=cv2.NORM_MINMAX)
-            dp = np.asarray(dp, dtype=np.uint8)
-            colormap = cv2.applyColorMap(dp, cv2.COLORMAP_JET)
-            img = cv2.merge((rgb, colormap))
-
-        elif self.dtype == 'rgb3d':
-            dp = cv2.normalize(dp, None, alpha=0, beta=255, norm_type=cv2.NORM_MINMAX)
-            dp = np.asarray(dp, dtype=np.uint8)
-            dp = cv2.merge((dp, dp, dp))
-            img = cv2.merge((rgb, dp))
-
+        img = get_frame(color_path, depth_path, dtype=self.dtype, depth_clip=True)
         return img
 
     def get_meta_info(self, seq_id):

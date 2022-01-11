@@ -11,7 +11,7 @@ from ltr.data.image_loader import jpeg4py_loader
 from ltr.admin.environment import env_settings
 import cv2
 
-from ltr.dataset.depth_utils import get_target_depth, get_layered_image_by_depth
+from ltr.dataset.depth_utils import get_frame
 
 class DepthTrack(BaseVideoDataset):
     """ DepthTrack dataset.
@@ -141,81 +141,18 @@ class DepthTrack(BaseVideoDataset):
         '''
         return os.path.join(seq_path, 'color', '{:08}.jpg'.format(frame_id+1)) , os.path.join(seq_path, 'depth', '{:08}.png'.format(frame_id+1)) # frames start from 1
 
-    def _get_frame(self, seq_path, frame_id, bbox=None):
+    def _get_frame(self, seq_path, frame_id):
         '''
         Return :
             - colormap from depth image
-            - [depth, depth, depth]
+            - 3xD = [depth, depth, depth], 255
+            - rgbcolormap
+            - rgb3d
+            - color 
+            - raw_depth
         '''
         color_path, depth_path = self._get_frame_path(seq_path, frame_id)
-
-        rgb = cv2.imread(color_path)
-        rgb = cv2.cvtColor(rgb, cv2.COLOR_BGR2RGB)
-        dp = cv2.imread(depth_path, -1)
-
-        max_depth = min(np.max(dp), 10000)
-        dp[dp > max_depth] = max_depth
-
-        if self.dtype == 'color':
-            # img = cv2.cvtColor(rgb, cv2.COLOR_BGR2RGB)
-            img = rgb
-
-        elif self.dtype == 'rgbcolormap':
-
-            colormap = cv2.normalize(dp, None, alpha=0, beta=255, norm_type=cv2.NORM_MINMAX)
-            colormap = np.asarray(colormap, dtype=np.uint8)
-            colormap = cv2.applyColorMap(colormap, cv2.COLORMAP_JET)
-
-            img = cv2.merge((rgb, colormap))
-
-        elif self.dtype == 'centered_colormap':
-            if bbox is None:
-                print('Error !!! require bbox for centered_colormap')
-                return
-            target_depth = get_target_depth(dp, bbox)
-            img = get_layered_image_by_depth(dp, target_depth, dtype=self.dtype)
-
-        elif self.dtype == 'colormap':
-
-            dp = cv2.normalize(dp, None, alpha=0, beta=255, norm_type=cv2.NORM_MINMAX)
-            dp = np.asarray(dp, dtype=np.uint8)
-            img = cv2.applyColorMap(dp, cv2.COLORMAP_JET)
-
-        elif self.dtype == 'colormap_normalizeddepth':
-            '''
-            Colormap + depth
-            '''
-            dp = cv2.normalize(dp, None, alpha=0, beta=255, norm_type=cv2.NORM_MINMAX)
-            dp = np.asarray(dp, dtype=np.uint8)
-
-            colormap = cv2.applyColorMap(dp, cv2.COLORMAP_JET)
-            r, g, b = cv2.split(colormap)
-            img = cv2.merge((r, g, b, dp))
-
-        elif self.dtype == 'raw_depth':
-            # No normalization here !!!!
-            image = cv2.merge((dp, dp, dp))
-
-        elif self.dtype == 'normalized_depth':
-            dp = cv2.normalize(dp, None, alpha=0, beta=255, norm_type=cv2.NORM_MINMAX)
-            dp = np.asarray(dp, dtype=np.uint8)
-            img = cv2.merge((dp, dp, dp)) # H * W * 3
-
-        elif self.dtype == 'rgbd':
-            r, g, b = cv2.split(rgb)
-            dp = cv2.normalize(dp, None, alpha=0, beta=255, norm_type=cv2.NORM_MINMAX)
-            dp = np.asarray(dp, dtype=np.uint8)
-            img = cv2.merge((r, g, b, dp))
-
-        elif self.dtype == 'rgb3d':
-            dp = cv2.normalize(dp, None, alpha=0, beta=255, norm_type=cv2.NORM_MINMAX)
-            dp = np.asarray(dp, dtype=np.uint8)
-            dp = cv2.merge((dp, dp, dp))
-            img = cv2.merge((rgb, dp))
-
-        else:
-            print('no such dtype ... : %s'%self.dtype)
-            img = None
+        img = get_frame(color_path, depth_path, dtype=self.dtype, depth_clip=True)
 
         return img
 
@@ -242,7 +179,7 @@ class DepthTrack(BaseVideoDataset):
         for key, value in anno.items():
             anno_frames[key] = [value[f_id, ...].clone() for ii, f_id in enumerate(frame_ids)]
 
-        frame_list = [self._get_frame(depth_path, f_id, bbox=anno_frames['bbox'][ii]) for ii, f_id in enumerate(frame_ids)]
+        frame_list = [self._get_frame(depth_path, f_id) for ii, f_id in enumerate(frame_ids)]
 
         object_meta = OrderedDict({'object_class_name': obj_class,
                                    'motion_class': None,
