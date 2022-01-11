@@ -11,7 +11,7 @@ from ltr.data.image_loader import jpeg4py_loader
 from ltr.admin.environment import env_settings
 import cv2
 
-from ltr.dataset.depth_utils import get_frame
+from ltr.dataset.depth_utils import get_rgbd_frame
 
 class Lasot_depth(BaseVideoDataset):
     """ LaSOT dataset.
@@ -154,7 +154,7 @@ class Lasot_depth(BaseVideoDataset):
             - [depth, depth, depth]
         '''
         color_path, depth_path = self._get_frame_path(seq_path, frame_id)
-        img = get_frame(color_path, depth_path, dtype=self.dtype, depth_clip=True)
+        img = get_rgbd_frame(color_path, depth_path, dtype=self.dtype, depth_clip=True)
 
         return img
 

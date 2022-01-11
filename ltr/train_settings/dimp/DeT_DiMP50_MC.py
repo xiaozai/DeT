@@ -28,16 +28,16 @@ def run(settings):
     settings.hinge_threshold = 0.05
     # settings.print_stats = ['Loss/total', 'Loss/iou', 'ClfTrain/clf_ce', 'ClfTrain/test_loss']
 
-    # Train datasets
-    coco_train = MSCOCOSeq_depth(settings.env.cocodepth_dir, dtype='rgbcolormap')
-    lasot_depth_train = Lasot_depth(root=settings.env.lasotdepth_dir, dtype='rgbcolormap')
-    depthtrack_train = DepthTrack(root=settings.env.depthtrack_dir, split='train', dtype='rgbcolormap')
-    # depthtrack_horizontal_train = DepthTrack(root=settings.env.depthtrack_horizontal_dir, dtype='rgbcolormap')
-    # depthtrack_vertical_train = DepthTrack(root=settings.env.depthtrack_vertical_dir, dtype='rgbcolormap')
 
+    input_dtype = 'rgbcolormap' # 'rgb3d' # 'rgbcolormap'
+    # Train datasets
+    coco_train = MSCOCOSeq_depth(settings.env.cocodepth_dir, dtype=input_dtype)
+    lasot_depth_train = Lasot_depth(root=settings.env.lasotdepth_dir, dtype=input_dtype')
+    depthtrack_train = DepthTrack(root=settings.env.depthtrack_dir, split='train', dtype=input_dtype)
+    
     # Validation datasets
     # cdtb_val = CDTB(settings.env.cdtb_dir, split='val', dtype='rgbcolormap')
-    depthtrack_val = DepthTrack(root=settings.env.depthtrack_dir, split='val', dtype='rgbcolormap')
+    depthtrack_val = DepthTrack(root=settings.env.depthtrack_dir, split='val', dtype=input_dtype)
 
     # Data transform
     transform_joint = tfm.Transform(tfm.ToGrayscale(probability=0.05))

@@ -8,7 +8,7 @@ from collections import OrderedDict
 from ltr.admin.environment import env_settings
 import numpy as np
 import cv2
-from ltr.dataset.depth_utils import get_frame
+from ltr.dataset.depth_utils import get_rgbd_frame
 
 class MSCOCOSeq_depth(BaseVideoDataset):
     """ The COCO dataset. COCO is an image dataset. Thus, we treat each image as a sequence of length 1.
@@ -136,7 +136,7 @@ class MSCOCOSeq_depth(BaseVideoDataset):
         color_path = os.path.join(self.img_path, 'color', color_path)
         depth_path = os.path.join(self.img_path, 'depth', depth_path)
 
-        img = get_frame(color_path, depth_path, dtype=self.dtype, depth_clip=True)
+        img = get_rgbd_frame(color_path, depth_path, dtype=self.dtype, depth_clip=True)
         return img
 
     def get_meta_info(self, seq_id):

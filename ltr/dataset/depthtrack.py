@@ -11,7 +11,7 @@ from ltr.data.image_loader import jpeg4py_loader
 from ltr.admin.environment import env_settings
 import cv2
 
-from ltr.dataset.depth_utils import get_frame
+from ltr.dataset.depth_utils import get_rgbd_frame
 
 class DepthTrack(BaseVideoDataset):
     """ DepthTrack dataset.
@@ -148,11 +148,11 @@ class DepthTrack(BaseVideoDataset):
             - 3xD = [depth, depth, depth], 255
             - rgbcolormap
             - rgb3d
-            - color 
+            - color
             - raw_depth
         '''
         color_path, depth_path = self._get_frame_path(seq_path, frame_id)
-        img = get_frame(color_path, depth_path, dtype=self.dtype, depth_clip=True)
+        img = get_rgbd_frame(color_path, depth_path, dtype=self.dtype, depth_clip=True)
 
         return img
 

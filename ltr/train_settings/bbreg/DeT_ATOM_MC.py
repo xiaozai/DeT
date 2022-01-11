@@ -22,17 +22,15 @@ def run(settings):
     settings.center_jitter_factor = {'train': 0, 'test': 4.5}
     settings.scale_jitter_factor = {'train': 0, 'test': 0.5}
 
+    input_dtype = 'rgbcolormap' # 'rgb3d' # 'rgbcolormap'
     # Train datasets
-    coco_train = MSCOCOSeq_depth(settings.env.cocodepth_dir, dtype='rgbcolormap')
-    lasot_depth_train = Lasot_depth(root=settings.env.lasotdepth_dir, dtype='rgbcolormap')
-    depthtrack_train = DepthTrack(root=settings.env.depthtrack_dir, split='train', dtype='rgbcolormap')
-
-    # depthtrack_horizontal_train = DepthTrack(root=settings.env.depthtrack_horizontal_dir,  split='train', dtype='rgbcolormap')
-    # depthtrack_vertical_train = DepthTrack(root=settings.env.depthtrack_vertical_dir,  split='train', dtype='rgbcolormap')
+    coco_train = MSCOCOSeq_depth(settings.env.cocodepth_dir, dtype=input_dtype)
+    lasot_depth_train = Lasot_depth(root=settings.env.lasotdepth_dir, dtype=input_dtype)
+    depthtrack_train = DepthTrack(root=settings.env.depthtrack_dir, split='train', dtype=input_dtype)
 
     # Validation datasets
     # cdtb_val = CDTB(settings.env.cdtb_dir, split='val', dtype='rgbcolormap')
-    depthtrack_val = DepthTrack(root=settings.env.depthtrack_dir, split='val', dtype='rgbcolormap')
+    depthtrack_val = DepthTrack(root=settings.env.depthtrack_dir, split='val', dtype=input_dtype)
 
     # The joint augmentation transform, that is applied to the pairs jointly
     transform_joint = tfm.Transform(tfm.ToGrayscale(probability=0.05))

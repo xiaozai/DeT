@@ -28,8 +28,8 @@ def run(settings):
     settings.hinge_threshold = 0.05
     # settings.print_stats = ['Loss/total', 'Loss/iou', 'ClfTrain/clf_ce', 'ClfTrain/test_loss']
 
+    input_dtype = 'rgbcolormap' # 'rgb3d' # 'rgbcolormap'
     # Train datasets
-    input_dtype = 'rgb3d' # 'rgbcolormap'
     coco_train = MSCOCOSeq_depth(settings.env.cocodepth_dir, dtype=input_dtype)
     lasot_depth_train = Lasot_depth(root=settings.env.lasotdepth_dir, dtype=input_dtype)
     depthtrack_train = DepthTrack(root=settings.env.depthtrack_dir, split='train', dtype=input_dtype)

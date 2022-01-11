@@ -10,7 +10,7 @@ from ltr.data.image_loader import jpeg4py_loader
 from .base_video_dataset import BaseVideoDataset
 from ltr.admin.environment import env_settings
 
-from ltr.dataset.depth_utils import get_frame
+from ltr.dataset.depth_utils import get_rgbd_frame
 
 def list_sequences(root, set_ids):
     """ Lists all the videos in the input set_ids. Returns a list of tuples (set_id, video_name)
@@ -125,8 +125,8 @@ class TrackingNet_depth(BaseVideoDataset):
         color_path = os.path.join(self.root, "TRAIN_" + str(set_id), "frames", vid_name, str(frame_id) + ".jpg")
         depth_path = os.path.join(self.root, "TRAIN_" + str(set_id), "depth", vid_name, str(frame_id) + ".png")
 
-        img = get_frame(color_path, depth_path, dtype=self.dtype, depth_clip=True)
-        
+        img = get_rgbd_frame(color_path, depth_path, dtype=self.dtype, depth_clip=True)
+
         return img
 
     def _get_class(self, seq_id):

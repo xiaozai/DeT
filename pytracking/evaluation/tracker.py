@@ -15,7 +15,7 @@ from pytracking.evaluation.multi_object_wrapper import MultiObjectWrapper
 from pathlib import Path
 import torch
 
-from ltr.dataset.depth_utils import get_frame
+from ltr.dataset.depth_utils import get_rgbd_frame
 
 import numpy as np
 import math
@@ -738,10 +738,10 @@ class Tracker:
 
     def _read_image(self, image_file: str, dtype='color'):
         if isinstance(image_file, dict):
-            img = get_frame(image_file['color'], image_file['depth'], dtype=dtype, depth_clip=True)
+            img = get_rgbd_frame(image_file['color'], image_file['depth'], dtype=dtype, depth_clip=True)
         else:
             if dtype == 'color':
-                img = get_frame(image_file, None, dtype=dtype, depth_clip=False)
+                img = get_rgbd_frame(image_file, None, dtype=dtype, depth_clip=False)
             else:
-                img = get_frame(None, image_file, dtype=dtype, depth_clip=False)
+                img = get_rgbd_frame(None, image_file, dtype=dtype, depth_clip=False)
         return img

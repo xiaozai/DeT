@@ -1,47 +1,12 @@
 import cv2
 import numpy as np
 
+def get_rgbd_frame(color_path, depth_path, dtype='rgbcolormap', depth_clip=False):
+    ''' read RGB and depth images
 
-class p_config(object):
-    grabcut_extra = 50
-    grabcut_rz_threshold = 300
-    grabcut_rz_factor = 1.5
-    minimun_target_pixels = 16
-    grabcut_iter = 3
-    radius = 500
-
-# def get_layered_image_by_depth(depth_image, target_depth, dtype='centered_colormap'):
-#
-#     p = p_config()
-#
-#     if target_depth is not None:
-#         low = max(target_depth-p.radius, 0)
-#         high = target_depth + p.radius
-#
-#         layer = depth_image.copy()
-#         layer[layer < low] = high + 10
-#         layer[layer > high] = high + 10
-#     else:
-#         layer = depth_image.copy()
-#
-#     layer = remove_bubbles(layer, bubbles_size=200)
-#
-#     if dtype == 'centered_colormap':
-#         layer = cv2.normalize(layer, None, alpha=0, beta=255, norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_32F)
-#         layer = np.asarray(layer, dtype=np.uint8)
-#         layer = cv2.applyColorMap(layer, cv2.COLORMAP_JET)
-#     elif dtype == 'centered_normalized_depth':
-#         layer = cv2.normalize(layer, None, alpha=0, beta=255, norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_32F)
-#         layer = np.asarray(layer, dtype=np.uint8)
-#         layer = cv2.merge((layer, layer, layer))
-#     elif dtype == 'centered_raw_depth':
-#         layer = np.asarray(layer)
-#         layer = np.stack((layer, layer, layer), axis=2)
-#
-#     return layer
-
-def get_frame(color_path, depth_path, dtype='rgbcolormap', depth_clip=False):
-    ''' read RGB and depth images '''
+        max_depth = 10 meter, in the most frames in CDTB and DepthTrack , the depth of target is smaller than 10 m
+        When on CDTB and DepthTrack testing, we use this depth clip
+    '''
 
     if color_path:
         rgb = cv2.imread(color_path)
@@ -51,8 +16,7 @@ def get_frame(color_path, depth_path, dtype='rgbcolormap', depth_clip=False):
 
     if depth_path:
         dp = cv2.imread(depth_path, -1)
-        # 10 meter, in the most frames in CDTB and DepthTrack , the depth of target is smaller than 10 m
-        # When on CDTB and DepthTrack testing, we use this depth clip
+
         if depth_clip:
             max_depth = min(np.median(dp) * 3, 10000)
             dp[dp>max_depth] = max_depth
@@ -99,6 +63,47 @@ def get_frame(color_path, depth_path, dtype='rgbcolormap', depth_clip=False):
     return img
 
 
+
+
+class p_config(object):
+    grabcut_extra = 50
+    grabcut_rz_threshold = 300
+    grabcut_rz_factor = 1.5
+    minimun_target_pixels = 16
+    grabcut_iter = 3
+    radius = 500
+
+def get_layered_image_by_depth(depth_image, target_depth, dtype='centered_colormap'):
+
+    p = p_config()
+
+    if target_depth is not None:
+        low = max(target_depth-p.radius, 0)
+        high = target_depth + p.radius
+
+        layer = depth_image.copy()
+        layer[layer < low] = high + 10
+        layer[layer > high] = high + 10
+    else:
+        layer = depth_image.copy()
+
+    layer = remove_bubbles(layer, bubbles_size=200)
+
+    if dtype == 'centered_colormap':
+        layer = cv2.normalize(layer, None, alpha=0, beta=255, norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_32F)
+        layer = np.asarray(layer, dtype=np.uint8)
+        layer = cv2.applyColorMap(layer, cv2.COLORMAP_JET)
+    elif dtype == 'centered_normalized_depth':
+        layer = cv2.normalize(layer, None, alpha=0, beta=255, norm_type=cv2.NORM_MINMAX, dtype=cv2.CV_32F)
+        layer = np.asarray(layer, dtype=np.uint8)
+        layer = cv2.merge((layer, layer, layer))
+    elif dtype == 'centered_raw_depth':
+        layer = np.asarray(layer)
+        layer = np.stack((layer, layer, layer), axis=2)
+
+    return layer
+
+    
 def remove_bubbles(image, bubbles_size=100):
     try:
         binary_map = (image > 0).astype(np.uint8)

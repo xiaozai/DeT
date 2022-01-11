@@ -11,7 +11,7 @@ from ltr.data.image_loader import jpeg4py_loader
 from ltr.admin.environment import env_settings
 import cv2 as cv
 
-from ltr.dataset.depth_utils import get_frame
+from ltr.dataset.depth_utils import get_rgbd_frame
 
 class CDTB(BaseVideoDataset):
     """ CDTB dataset
@@ -145,9 +145,9 @@ class CDTB(BaseVideoDataset):
     def _get_frame(self, seq_path, frame_id, depth_threshold=None):
 
         color_path, depth_path = self._get_frame_path(seq_path, frame_id)
-        img = get_frame(color_path, depth_path, dtype=self.dtype, depth_clip=True)
+        img = get_rgbd_frame(color_path, depth_path, dtype=self.dtype, depth_clip=True)
         return img
-        
+
     def _get_class(self, seq_path):
         raw_class = seq_path.split('_')[0]
         return raw_class

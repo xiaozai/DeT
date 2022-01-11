@@ -12,7 +12,7 @@ from ltr.admin.environment import env_settings
 import numpy as np
 import cv2
 
-from ltr.dataset.depth_utils import get_frame
+from ltr.dataset.depth_utils import get_rgbd_frame
 
 class Got10k_depth(BaseVideoDataset):
     """ GOT-10k dataset.
@@ -168,7 +168,7 @@ class Got10k_depth(BaseVideoDataset):
     def _get_frame(self, seq_path, frame_id):
         # return self.image_loader(self._get_frame_path(seq_path, frame_id))
         color_path, depth_path = self._get_frame_path(seq_path, frame_id)
-        img = get_frame(color_path, depth_path, dtype=self.dtype, depth_clip=True)
+        img = get_rgbd_frame(color_path, depth_path, dtype=self.dtype, depth_clip=True)
         return img
 
     def get_class_name(self, seq_id):
