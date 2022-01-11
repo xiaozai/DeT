@@ -142,11 +142,7 @@ Below figures are
 
 
 ### Download
-1) Download the training dataset(70 sequences) of VOT2021RGBD Challenge from Zenodo (DepthTrack RGBD Tracking Benchmark) and edit the path in local.py
-More data will be uploaded soon, we hope to bring a large scale RGBD training dataset.
-```
-http://doi.org/10.5281/zenodo.4716441
-```
+1) Download the training dataset and edit the path in local.py
 
 2) Download the checkpoints for DeT trackers (in install.sh)
 ```
