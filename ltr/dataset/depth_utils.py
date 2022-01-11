@@ -54,7 +54,7 @@ def get_frame(color_path, depth_path, dtype='rgbcolormap', depth_clip=False):
         # 10 meter, in the most frames in CDTB and DepthTrack , the depth of target is smaller than 10 m
         # When on CDTB and DepthTrack testing, we use this depth clip
         if depth_clip:
-            max_depth = min(np.median(depth_image) * 3, 10000)
+            max_depth = min(np.median(dp) * 3, 10000)
             dp[dp>max_depth] = max_depth
     else:
         dp = None
@@ -80,13 +80,13 @@ def get_frame(color_path, depth_path, dtype='rgbcolormap', depth_clip=False):
         dp = cv2.normalize(dp, None, alpha=0, beta=255, norm_type=cv2.NORM_MINMAX)
         img = np.asarray(dp, dtype=np.uint8)
 
-    elif self.dtype == 'rgbcolormap':
+    elif dtype == 'rgbcolormap':
         dp = cv2.normalize(dp, None, alpha=0, beta=255, norm_type=cv2.NORM_MINMAX)
         dp = np.asarray(dp, dtype=np.uint8)
         colormap = cv2.applyColorMap(dp, cv2.COLORMAP_JET)
         img = cv2.merge((rgb, colormap))
 
-    elif self.dtype == 'rgb3d':
+    elif dtype == 'rgb3d':
         dp = cv2.normalize(dp, None, alpha=0, beta=255, norm_type=cv2.NORM_MINMAX)
         dp = np.asarray(dp, dtype=np.uint8)
         dp = cv2.merge((dp, dp, dp))

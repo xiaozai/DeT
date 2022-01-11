@@ -2,7 +2,7 @@ import torch
 import torch.utils.data.dataloader
 import importlib
 import collections
-from torch._six import string_classes, int_classes
+from torch._six import string_classes #, int_classes
 from pytracking import TensorDict, TensorList
 import re
 import numpy as np
@@ -46,7 +46,8 @@ def ltr_collate(batch):
         if elem.shape == ():  # scalars
             py_type = float if elem.dtype.name.startswith('float') else int
             return torch.utils.data.dataloader.numpy_type_map[elem.dtype.name](list(map(py_type, batch)))
-    elif isinstance(batch[0], int_classes):
+    # elif isinstance(batch[0], int_classes):
+    elif isinstance(batch[0], int):
         return torch.LongTensor(batch)
     elif isinstance(batch[0], float):
         return torch.DoubleTensor(batch)
@@ -98,7 +99,8 @@ def ltr_collate_stack1(batch):
         if elem.shape == ():  # scalars
             py_type = float if elem.dtype.name.startswith('float') else int
             return torch.utils.data.dataloader.numpy_type_map[elem.dtype.name](list(map(py_type, batch)))
-    elif isinstance(batch[0], int_classes):
+    # elif isinstance(batch[0], int_classes):
+    elif isinstance(batch[0], int):
         return torch.LongTensor(batch)
     elif isinstance(batch[0], float):
         return torch.DoubleTensor(batch)
