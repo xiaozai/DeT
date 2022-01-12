@@ -50,6 +50,12 @@ Please check [LaSOT](http://vision.cs.stonybrook.edu/~lasot/) for RGB images and
 [Download (part09)](https://doi.org/10.5281/zenodo.5495249),
 [Download (part10)](https://doi.org/10.5281/zenodo.5495255)
 
+[Donwload (lion, kangaroo) fix the bad zip files](https://doi.org/10.5281/zenodo.5840345)
+
+[Donwload (pig, rabbit, robot, rubicCube) fix the bad zip files](https://doi.org/10.5281/zenodo.5840339)
+
+[Download (lizard, microphone, monkey, motorcycle, person) fix the bad zip files](https://doi.org/10.5281/zenodo.5840343)
+
 ### Generated Got10K Depth Images
 
 [Download (0001 - 0700)](https://doi.org/10.5281/zenodo.5799060), 
@@ -184,6 +190,7 @@ python run_tracker.py atom DeT_ATOM_MC --dataset_name depthtrack --input_dtype r
 python run_tracker.py dimp DeT_DiMP50_Max --dataset_name depthtrack --input_dtype rgbcolormap
 python run_tracker.py dimp DeT_DiMP50_Mean --dataset_name depthtrack --input_dtype rgbcolormap
 python run_tracker.py dimp DeT_DiMP50_MC --dataset_name depthtrack --input_dtype rgbcolormap
+python run_tracker.py dimp DeT_DiMP50_DO --dataset_name depthtrack --input_dtype colormap
 
 
 python run_tracker.py dimp dimp50 --dataset_name depthtrack --input_dtype color
