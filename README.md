@@ -32,7 +32,14 @@ Code and datasets for
 
 All videoes are 640x360, except 4 sequences in 640x320: painting_indoor_320, pine02_wild_320, toy07_indoor_320, hat02_indoor_320
 
+### Monocular Depth Estimation 
+
+**[2022.01]** : Author found that [DPT](https://github.com/isl-org/DPT) (Vision Transformers for Dense Prediction) works very well for depth estimation!
+
+**[2021.07]** : [DenseDepth](https://github.com/ialhashim/DenseDepth) and [HighResDepth](http://yaksoy.github.io/highresdepth/) 
+
 ### Generated LaSOT Depth Images
+
 We manually remove bad sequences, and here are totally 646 sequences (some zip files may be broken, will be updated soon) used the **DenseDepth** method. 
 Original DenseDepth outputs are in range [0, 1.0], we multiply 2^16.
 Please check [LaSOT](http://vision.cs.stonybrook.edu/~lasot/) for RGB images and groundtruth.
