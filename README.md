@@ -158,6 +158,13 @@ Below figures are
 1) Download the training dataset and edit the path in local.py
 
 2) Download the checkpoints for DeT trackers (in install.sh)
+
+The checkpoints (don't edit it :):
+```
+https://drive.google.com/drive/folders/1DHDVhGHYYhoI9mjmgVUoautQe11SIKHL?usp=sharing
+```
+
+These links do not work now ! 
 ```
 gdown https://drive.google.com/uc\?id\=1djSx6YIRmuy3WFjt9k9ZfI8q343I7Y75 -O pytracking/networks/DeT_DiMP50_Max.pth
 gdown https://drive.google.com/uc\?id\=1JW3NnmFhX3ZnEaS3naUA05UaxFz6DLFW -O pytracking/networks/DeT_DiMP50_Mean.pth
