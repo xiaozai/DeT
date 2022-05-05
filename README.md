@@ -17,7 +17,7 @@ Code and datasets for
 @InProceedings{yan2021dot,
   title       = {Depth-only Object Tracking},
   author      = {Yan, Song and Yang, Jinyu and Leonardis, Ales and Kamarainen, Joni-Kristian},
-  booktitle   = {Procedings of the British Machine Vision Conference (BMVC)},
+  booktitle   = {Proceedings of the British Machine Vision Conference (BMVC)},
   year        = {2021},
   organization= {British Machine Vision Association}
 }
